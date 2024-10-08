@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Case Halloween</title>
+    <style>
+        body {
+            font-family: 'Creepster', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #ff6600;
+            background-image: url('https://www.transparenttextures.com/patterns/black-thread-light.png');
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        #result {
+            font-size: 72px;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #ff6600;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff6600;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+        #history {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Générateur de Case Halloween</h1>
+        <div id="result">-</div>
+        <button onclick="generateCase()">Invoquer une case</button>
+        <div id="history"></div>
+    </div>
+
+    <script>
+        let history = [];
+        function generateCase() {
+            const letters = ['A', 'B', 'C'];
+            const letter = letters[Math.floor(Math.random() * letters.length)];
+            const number = Math.floor(Math.random() * 20) + 1;
+            const newCase = `${letter}${number}`;
+            document.getElementById('result').innerText = newCase;
+            history.unshift(newCase);
+            if (history.length > 5) history.pop();
+            updateHistory();
+        }
+        function updateHistory() {
+            const historyElement = document.getElementById('history');
+            historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
+        }
+    </script>
+</body>
+</html>
