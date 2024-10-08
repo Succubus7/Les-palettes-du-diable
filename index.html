@@ -74,8 +74,9 @@
             margin-bottom: 20px;
         }
         .team p {
-            font-size: 36px;
+            font-size: 42px;
             line-height: 1.4;
+            color: white;
         }
         #history, #remaining {
             font-size: 24px;
@@ -99,19 +100,6 @@
                 <p></p>
             </div>
         </div>
-        <div id="history"></div>
-        <div id="remaining"></div>
-    </div>
-
-    <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
-</head>
-<body>
-    <div class="container">
-        <h1>Générateur de Case Halloween</h1>
-        <div id="result">-</div>
-        <button onclick="startGeneration()" id="generateButton">Invoquer une case</button>
-        <div id="challenge1"></div>
-        <div id="challenge2"></div>
         <div id="history"></div>
         <div id="remaining"></div>
     </div>
@@ -168,7 +156,7 @@
             shuffleDisplay();
         }
 
-function shuffleDisplay() {
+        function shuffleDisplay() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
                 return;
@@ -180,11 +168,11 @@ function shuffleDisplay() {
                 document.getElementById('result').innerText = randomCase;
                 shuffleCount++;
 
-                if (shuffleCount >= 50) { // Augmenté à 50 changements sur 5 secondes
+                if (shuffleCount >= 50) {
                     clearInterval(shuffleInterval);
-                    setTimeout(generateCase, 100); // Réduit à 100ms pour une transition plus rapide
+                    setTimeout(generateCase, 100);
                 }
-            }, 100); // Changé à 100ms (5000ms / 50)
+            }, 100);
         }
 
         function getRandomChallenge() {
@@ -198,8 +186,8 @@ function shuffleDisplay() {
         function generateCase() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-        document.querySelector('#challenge1 p').innerHTML = challengeOrQuestion1;
-        document.querySelector('#challenge2 p').innerHTML = challengeOrQuestion2;
+                document.querySelector('#challenge1 p').innerText = "";
+                document.querySelector('#challenge2 p').innerText = "";
                 isGenerating = false;
                 document.getElementById('generateButton').disabled = false;
                 return;
@@ -215,8 +203,8 @@ function shuffleDisplay() {
             const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
             const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
             
-            document.getElementById('challenge1').innerHTML = "<h3>Équipe 1:</h3>" + challengeOrQuestion1;
-            document.getElementById('challenge2').innerHTML = "<h3>Équipe 2:</h3>" + challengeOrQuestion2;
+            document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
+            document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
             
             updateHistory();
             updateRemaining();
