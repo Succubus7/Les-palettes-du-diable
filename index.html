@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASE DU TCS</title>
+    <title>Générateur de Case Halloween - Double Palette</title>
     <style>
         body {
             font-family: 'Creepster', cursive;
@@ -35,7 +35,8 @@
         #result {
             font-size: 72px;
             margin: 20px 0;
-            text-shadow: 0 0 10px #fff3f1;
+            text-shadow: 0 0 10px #ff6600;
+            height: 100px;
         }
         button {
             font-size: 18px;
@@ -50,6 +51,10 @@
         button:hover {
             background-color: #ff8533;
             transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
         #challenge1, #challenge2 {
             margin-top: 20px;
@@ -68,56 +73,52 @@
 </head>
 <body>
     <div class="container">
-        <h1>Case du TCR : </h1>
+        <h1>Générateur de Case Halloween</h1>
         <div id="result">-</div>
-        <button onclick="generateCase()">Invoquer une case</button>
+        <button onclick="startGeneration()" id="generateButton">Invoquer une case</button>
         <div id="challenge1"></div>
         <div id="challenge2"></div>
         <div id="history"></div>
         <div id="remaining"></div>
     </div>
 
-       <script>
+    <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
+
+    <script>
         const letters = ['A', 'B', 'C'];
         const numbers = Array.from({length: 20}, (_, i) => i + 1);
         let availableCases = [];
         let history = [];
 
-        const challenges = [
+        const allChallenges = [
             "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
-            "Fais ta meilleure imitation d'un animal en chaleur pendant 10 secondes.",
-            "Fais un compliment exagéré à chaque personne dans la pièce en moins de 30 secondes.",
-            "Avec la personne à ta gauche, faites un concours de grimaces. Les autres votent pour le gagnant.",
-            "Fais semblant d'avoir un orgasme tout en lisant un paragraphe d'un livre choisi au hasard.",
-            "Essaie de faire rire la personne la plus sérieuse du groupe en 30 secondes, sans la toucher ni parler.",
-            "Invente un secret scandaleux sur la personne en face de toi et raconte-le comme si tu étais un présentateur de journal télévisé.",
-            "Mime une scène de ta vie quotidienne comme si tu étais dans un film muet des années 20, avec des gestes exagérés et des expressions faciales over-the-top.",
-            "Fais une pose de bodybuilder ridicule, les autres choisissent le gagnant.",
-            "Fais ton cri d'orgasme le plus théâtral. Les autres votent pour le plus convaincant.",
-            "Échange un vêtement avec la personne à ta droite pendant 2 tours.",
-            "Fais un massage de 30 secondes à la personne à ta gauche.",
-            "Improvise une pub pour un sextoy imaginaire en 20 secondes.",
-            "Fais ta meilleure duckface et prends un selfie.",
-            "Fais un concours de regard séducteur avec la personne en face de toi. Le premier qui rit a perdu."
+            "Imite ton animal préféré pendant 30 secondes.",
+            "Raconte une blague en utilisant uniquement des bruits d'animaux.",
+            "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
+            "Chante le refrain de ta chanson préférée en mode opéra.",
+            "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
+            "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
+            "Invente et démontre un nouveau pas de danse ridicule.",
+            "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
+            "Imite trois célébrités différentes en moins d'une minute.",
+            // Ajoutez ici les 50 défis supplémentaires
         ];
 
-        const questions = [
-            "Si tu devais échanger ta garde-robe avec quelqu'un dans la pièce, qui choisirais-tu et pourquoi ?",
-            "Quelle est la partie du corps la plus attirante de la personne à ta droite ?",
-            "Si tu devais être coincé dans un ascenseur pendant 24h avec deux personnes ici, qui choisirais-tu ?",
-            "Imite la façon de marcher de quelqu'un dans la pièce. Les autres doivent deviner qui c'est.",
-            "Si tu devais écrire une chanson d'amour sur quelqu'un ici, qui serait le sujet ?",
-            "Quel secret penses-tu que la personne en face de toi cache ?",
-            "Si tu devais créer un parfum inspiré par quelqu'un dans la pièce, quelle serait son odeur ?",
-            "Quelle célébrité la personne à ta gauche te rappelle-t-elle ?",
-            "Si tu devais échanger ta personnalité avec quelqu'un ici pour une journée, qui choisirais-tu ?",
-            "Quel superhéros serait la personne deux places à ta droite et pourquoi ?",
-            "Si tu devais organiser un rendez-vous romantique pour deux personnes dans cette pièce, qui choisirais-tu et que planifierais-tu ?",
-            "Quelle est la chose la plus embarrassante que tu penses que la personne en diagonale de toi ait faite récemment ?",
-            "Si tu devais être le assistant personnel de quelqu'un ici pendant une semaine, qui choisirais-tu ?",
-            "Quel trait de personnalité admires-tu le plus chez la personne la plus âgée du groupe ?",
-            "Si tu devais former un groupe de musique avec trois personnes ici, qui choisirais-tu et quels instruments joueraient-ils ?"
+        const allQuestions = [
+            "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
+            "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
+            "Quel est ton plus grand regret ?",
+            "Quelle est la chose la plus folle sur ta bucket list ?",
+            "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
+            "Quel est le mensonge le plus important que tu aies jamais dit ?",
+            "Quelle est la chose la plus étrange que tu aies mangée ?",
+            "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
+            "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
+            "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
+            // Ajoutez ici les 50 questions supplémentaires
         ];
+
+        let isGenerating = false;
 
         function initializeAvailableCases() {
             availableCases = letters.flatMap(letter => 
@@ -125,11 +126,48 @@
             );
         }
 
+        function startGeneration() {
+            if (isGenerating) return;
+            isGenerating = true;
+            document.getElementById('generateButton').disabled = true;
+            document.getElementById('invocationSound').play();
+            shuffleDisplay();
+        }
+
+        function shuffleDisplay() {
+            if (availableCases.length === 0) {
+                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
+                return;
+            }
+
+            let shuffleCount = 0;
+            const shuffleInterval = setInterval(() => {
+                const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
+                document.getElementById('result').innerText = randomCase;
+                shuffleCount++;
+
+                if (shuffleCount >= 20) {
+                    clearInterval(shuffleInterval);
+                    setTimeout(generateCase, 350);
+                }
+            }, 350);
+        }
+
+        function getRandomChallenge() {
+            return allChallenges[Math.floor(Math.random() * allChallenges.length)];
+        }
+
+        function getRandomQuestion() {
+            return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+        }
+
         function generateCase() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
                 document.getElementById('challenge1').innerText = "";
                 document.getElementById('challenge2').innerText = "";
+                isGenerating = false;
+                document.getElementById('generateButton').disabled = false;
                 return;
             }
 
@@ -140,21 +178,17 @@
             history.unshift(newCase);
             if (history.length > 5) history.pop();
             
-            // Générer un défi ou une question pour l'équipe 1
-            const challengeOrQuestion1 = Math.random() < 0.5 ? 
-                challenges[Math.floor(Math.random() * challenges.length)] :
-                questions[Math.floor(Math.random() * questions.length)];
-            
-            // Générer un défi ou une question pour l'équipe 2
-            const challengeOrQuestion2 = Math.random() < 0.5 ? 
-                challenges[Math.floor(Math.random() * challenges.length)] :
-                questions[Math.floor(Math.random() * questions.length)];
+            const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+            const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
             
             document.getElementById('challenge1').innerHTML = "<h3>Équipe 1:</h3>" + challengeOrQuestion1;
             document.getElementById('challenge2').innerHTML = "<h3>Équipe 2:</h3>" + challengeOrQuestion2;
             
             updateHistory();
             updateRemaining();
+
+            isGenerating = false;
+            document.getElementById('generateButton').disabled = false;
         }
 
         function updateHistory() {
@@ -173,4 +207,3 @@
     </script>
 </body>
 </html>
-
