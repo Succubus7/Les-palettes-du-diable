@@ -99,6 +99,30 @@
             font-size: 24px;
             margin-top: 30px;
         }
+                @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -50px) rotate(5deg); }
+            50% { transform: translate(100px, 0) rotate(0deg); }
+            75% { transform: translate(50px, 50px) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        #ghost {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z" fill="white"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float 10s infinite ease-in-out;
+            z-index: 1000;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="ghost"></div>
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
@@ -243,6 +267,29 @@
         // Initialiser le jeu
         initializeAvailableCases();
         updateRemaining();
+
+        function moveGhost() {
+            const ghost = document.getElementById('ghost');
+            const maxX = window.innerWidth - ghost.offsetWidth;
+            const maxY = window.innerHeight - ghost.offsetHeight;
+
+            function animate() {
+                const newX = Math.random() * maxX;
+                const newY = Math.random() * maxY;
+                ghost.style.left = `${newX}px`;
+                ghost.style.top = `${newY}px`;
+                setTimeout(animate, 10000 + Math.random() * 5000); // Change de position toutes les 10-15 secondes
+            }
+
+            animate();
+        }
+
+        // Appelez cette fonction au chargement de la page
+        window.onload = function() {
+            initializeAvailableCases();
+            updateRemaining();
+            moveGhost();
+        };
     </script>
 </body>
 </html>
