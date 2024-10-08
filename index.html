@@ -134,7 +134,7 @@
             shuffleDisplay();
         }
 
-        function shuffleDisplay() {
+function shuffleDisplay() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
                 return;
@@ -146,11 +146,11 @@
                 document.getElementById('result').innerText = randomCase;
                 shuffleCount++;
 
-                if (shuffleCount >= 20) {
+                if (shuffleCount >= 50) { // Augmenté à 50 changements sur 5 secondes
                     clearInterval(shuffleInterval);
-                    setTimeout(generateCase, 350);
+                    setTimeout(generateCase, 100); // Réduit à 100ms pour une transition plus rapide
                 }
-            }, 350);
+            }, 100); // Changé à 100ms (5000ms / 50)
         }
 
         function getRandomChallenge() {
