@@ -123,4 +123,52 @@ function revealChallenge(team) {
 
 function updateHistory() {
     const historyElement = document.getElementById('history');
-    historyElement.innerHTML = "<h3
+    historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
+}
+
+function updateRemaining() {
+    const remainingElement = document.getElementById('remaining');
+    remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
+}
+
+function moveGhost() {
+    const ghost = document.getElementById('ghost');
+    const maxX = window.innerWidth - ghost.offsetWidth;
+    const maxY = window.innerHeight - ghost.offsetHeight;
+
+    function animate() {
+        const newX = Math.random() * (maxX - 100);
+        const newY = Math.random() * (maxY - 100);
+        ghost.style.left = `${newX}px`;
+        ghost.style.top = `${newY}px`;
+        ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        setTimeout(animate, 5000 + Math.random() * 3000);
+    }
+
+    animate();
+}
+
+function checkGhostVisibility() {
+    const ghost = document.getElementById('ghost');
+    const rect = ghost.getBoundingClientRect();
+    const isVisible = (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+
+    if (!isVisible) {
+        ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
+        ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
+    }
+}
+
+window.onload = function() {
+    initializeAvailableCases();
+    updateRemaining();
+    moveGhost();
+    setInterval(checkGhostVisibility, 1000);
+};
+
+window.addEventListener('resize', moveGhost);
