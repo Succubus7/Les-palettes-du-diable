@@ -4,389 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Générateur de Case Halloween - Double Palette</title>
-<style>
-    div > span {
-  opacity: 0.15;
-}
-#I {
-  opacity: 1;
-  animation: flickerI 2s linear  reverse infinite;
-}
-#I::after {
-  content: '';
-  width: 150%;
-  -webkit-box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
-  -moz-box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
-  box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
-}
-#L, #G {
-  animation: flickerLG 2s linear reverse infinite;
-  position: relative;
-}
-#L::after, 
-#L::before  {
-  content:' ';
-  width: 100px;
-  height: 100px;
-  background: var(--white);
-  position: absolute;
-  top: -50%;
-  left: 100%;
-  border-radius: 100%;
-  opacity: 0.05;
-  filter: blur(10px);
-}
-#L::after {
-  width: 200px;
-  height: 200px;
-  top: -150%;
-  left: -5%;
-  opacity: 0.1;
-  filter: blur(10px);
-}
-#H {
-  animation: flickerH 2s linear reverse infinite
-}
-
-#T {
-  animation: flickerH 2s linear reverse infinite
-}
-
-@keyframes flickerI {
-  0% {
-    opacity: 0.4;
-  }
-  5% {
-    opacity: 0.5;
-  }
-  10% {
-    opacity: 0.6;
-  }
-  15% {
-    opacity: 0.85;
-  }
-  25% {
-    opacity: 0.5;
-  }
-  30% {
-    opacity: 1;
-  }
-  35% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.25;
-  }
-  45% {
-    opacity: 0.5;
-  }
-  60% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.85;
-  }
-  80% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes flickerLG {
-  0% {
-    opacity: 0.19;
-  }
-  5% {
-    opacity: 0.2;
-  }
-  10% {
-    opacity: 0.25;
-  }
-  15% {
-    opacity: 0.35;
-  }
-  25% {
-    opacity: 0.2;
-  }
-  30% {
-    opacity: 0.4;
-  }
-  35% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.25;
-  }
-  45% {
-    opacity: 0.2;
-  }
-  60% {
-    opacity: 0.4;
-  }
-  70% {
-    opacity: 0.35;
-  }
-  80% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 0.4;
-  }
-}
-
-@keyframes flickerH {
-  0% {
-    opacity: 0.15;
-  }
-  5% {
-    opacity: 0.2;
-  }
-  10% {
-    opacity: 0.12;
-  }
-  15% {
-    opacity: 0.2;
-  }
-  25% {
-    opacity: 0.15;
-  }
-  30% {
-    opacity: 0.4;
-  }
-  35% {
-    opacity: 0.05;
-  }
-  40% {
-    opacity: 0.12;
-  }
-  45% {
-    opacity: 0.15;
-  }
-  60% {
-    opacity: 0.3;
-  }
-  70% {
-    opacity: 0.2;
-  }
-  80% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.18;
-  }
-  100% {
-    opacity: 0.3;
-  }
-}
-
-@keyframes flickerT {
-  0% {
-    opacity: 0.01;
-  }
-  5% {
-    opacity: 0.05;
-  }
-  10% {
-    opacity: 0.03;
-  }
-  15% {
-    opacity: 0.1;
-  }
-  25% {
-    opacity: 0.07;
-  }
-  30% {
-    opacity: 0.1;
-  }
-  35% {
-    opacity: 0.05;
-  }
-  40% {
-    opacity: 0.06;
-  }
-  45% {
-    opacity: 0.1;
-  }
-  60% {
-    opacity: 0.;
-  }
-  70% {
-    opacity: 0.1;
-  }
-  80% {
-    opacity: 0.;
-  }
-  90% {
-    opacity: 0.0;
-  }
-  100% {
-    opacity: 0.1;
-  }
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-    @keyframes glow {
-        0% { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600; }
-        50% { text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600; }
-        100% { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600; }
-    }
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
-    }
-    body {
-        font-family: 'Creepster', cursive;
-        margin: 0;
-        padding: 0;
-        #background-image: url('https://zupimages.net/up/24/39/a699.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #ff6600;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    .container {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-    h1 {
-        font-size: 72px;
-        margin-bottom: 30px;
-        text-shadow: 4px 4px 8px #000000;
-        animation: glow 2s ease-in-out infinite;
-    }
-    #result {
-        font-size: 120px;
-        margin: 30px 0;
-        text-shadow: 0 0 20px #ff6600;
-        height: 150px;
-        animation: pulse 1s ease-in-out infinite;
-    }
-    #generateButton {
-        font-size: 36px;
-        padding: 20px 40px;
-        cursor: pointer;
-        background-color: #ff6600;
-        color: #1a1a1a;
-        border: none;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        margin-bottom: 30px;
-    }
-    #generateButton:hover {
-        background-color: #ff8533;
-        transform: scale(1.05);
-    }
-    #generateButton:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-    }
-    .teams-container {
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 30px;
-    }
-    .team {
-        width: 35%;
-        background-color: rgba(255, 102, 0, 0.2);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: left;
-        animation: fadeIn 1s ease-out;
-        min-height: 400px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .team h3 {
-        font-size: 48px;
-        margin-bottom: 20px;
-    }
-    .team p {
-        font-size: 36px;
-        line-height: 1.4;
-        color: white;
-        flex-grow: 1;
-    }
-    #history, #remaining {
-        font-size: 24px;
-        margin-top: 30px;
-    }
-    #ghost {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z" fill="white"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        z-index: 1000;
-        transition: all 5s ease-in-out;
-    }
-    #grim-reaper {
-        width: 250px;
-        height: auto;
-        animation: float 3s ease-in-out infinite;
-    }
-    .reveal-button {
-        font-size: 24px;
-        padding: 10px 20px;
-        cursor: pointer;
-        background-color: #ff6600;
-        color: #1a1a1a;
-        border: none;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        margin-top: 10px;
-        align-self: flex-start;
-    }
-    .reveal-button:hover {
-        background-color: #ff8533;
-        transform: scale(1.05);
-    }
-    .hidden {
-        display: none;
-    }
-</style>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600; }
+            50% { text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600; }
+            100% { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        body {
+            font-family: 'Creepster', cursive;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://zupimages.net/up/24/39/a699.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ff6600;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .halloween-title {
+            font-size: 100px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .halloween-title > span {
+            opacity: 0.15;
+        }
+        #I {
+            opacity: 1;
+            animation: flickerI 2s linear reverse infinite;
+        }
+        #I::after {
+            content: '';
+            width: 150%;
+            -webkit-box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
+            -moz-box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
+            box-shadow: -35px 0px 60px 8px rgba(255,255,255,1);
+        }
+        #L, #G {
+            animation: flickerLG 2s linear reverse infinite;
+            position: relative;
+        }
+        #L::after, 
+        #L::before  {
+            content:' ';
+            width: 100px;
+            height: 100px;
+            background: var(--white);
+            position: absolute;
+            top: -50%;
+            left: 100%;
+            border-radius: 100%;
+            opacity: 0.05;
+            filter: blur(10px);
+        }
+        #L::after {
+            width: 200px;
+            height: 200px;
+            top: -150%;
+            left: -5%;
+            opacity: 0.1;
+            filter: blur(10px);
+        }
+        #H {
+            animation: flickerH 2s linear reverse infinite
+        }
+        #T {
+            animation: flickerH 2s linear reverse infinite
+        }
+        @keyframes flickerI {
+            0% { opacity: 0.4; }
+            5% { opacity: 0.5; }
+            10% { opacity: 0.6; }
+            15% { opacity: 0.85; }
+            25% { opacity: 0.5; }
+            30% { opacity: 1; }
+            35% { opacity: 0.1; }
+            40% { opacity: 0.25; }
+            45% { opacity: 0.5; }
+            60% { opacity: 1; }
+            70% { opacity: 0.85; }
+            80% { opacity: 0.4; }
+            90% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        @keyframes flickerLG {
+            0% { opacity: 0.19; }
+            5% { opacity: 0.2; }
+            10% { opacity: 0.25; }
+            15% { opacity: 0.35; }
+            25% { opacity: 0.2; }
+            30% { opacity: 0.4; }
+            35% { opacity: 0.1; }
+            40% { opacity: 0.25; }
+            45% { opacity: 0.2; }
+            60% { opacity: 0.4; }
+            70% { opacity: 0.35; }
+            80% { opacity: 0.4; }
+            90% { opacity: 0.2; }
+            100% { opacity: 0.4; }
+        }
+        @keyframes flickerH {
+            0% { opacity: 0.15; }
+            5% { opacity: 0.2; }
+            10% { opacity: 0.12; }
+            15% { opacity: 0.2; }
+            25% { opacity: 0.15; }
+            30% { opacity: 0.4; }
+            35% { opacity: 0.05; }
+            40% { opacity: 0.12; }
+            45% { opacity: 0.15; }
+            60% { opacity: 0.3; }
+            70% { opacity: 0.2; }
+            80% { opacity: 0.3; }
+            90% { opacity: 0.18; }
+            100% { opacity: 0.3; }
+        }
+        @keyframes flickerT {
+            0% { opacity: 0.01; }
+            5% { opacity: 0.05; }
+            10% { opacity: 0.03; }
+            15% { opacity: 0.1; }
+            25% { opacity: 0.07; }
+            30% { opacity: 0.1; }
+            35% { opacity: 0.05; }
+            40% { opacity: 0.06; }
+            45% { opacity: 0.1; }
+            60% { opacity: 0.0; }
+            70% { opacity: 0.1; }
+            80% { opacity: 0.0; }
+            90% { opacity: 0.0; }
+            100% { opacity: 0.1; }
+        }
+        #result {
+            font-size: 120px;
+            margin: 30px 0;
+            text-shadow: 0 0 20px #ff6600;
+            height: 150px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        #generateButton {
+            font-size: 36px;
+            padding: 20px 40px;
+            cursor: pointer;
+            background-color: #ff6600;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        #generateButton:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+        #generateButton:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .teams-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .team {
+            width: 35%;
+            background-color: rgba(255, 102, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            animation: fadeIn 1s ease-out;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .team h3 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .team p {
+            font-size: 36px;
+            line-height: 1.4;
+            color: white;
+            flex-grow: 1;
+        }
+        #history, #remaining {
+            font-size: 24px;
+            margin-top: 30px;
+        }
+        #ghost {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z" fill="white"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 1000;
+            transition: all 5s ease-in-out;
+        }
+        #grim-reaper {
+            width: 250px;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
+        .reveal-button {
+            font-size: 24px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff6600;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+        .reveal-button:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="ghost"></div>
     <div class="container">
-        <div>
-  <span id="I">H</span>
-  <span id="T">A</span>
-  <span id="I">L</span>
-  <span id="T">L</span>
-  <span id="I">🎃</span>
-  <span id="T">W</span>
-  <span id="I">E</span>
-  <span id="T">E</span>
-  <span id="I">N</span>
-</div>
+        <div class="halloween-title">
+            <span id="I">H</span>
+            <span id="T">A</span>
+            <span id="I">L</span>
+            <span id="T">L</span>
+            <span id="I">🎃</span>
+            <span id="T">W</span>
+            <span id="I">E</span>
+            <span id="T">E</span>
+            <span id="I">N</span>
+        </div>
         <div id="result">-</div>
         <button onclick="startGeneration()" id="generateButton">Invoquer une case</button>
         <div class="teams-container">
@@ -408,181 +292,181 @@
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
 
-    <script>
-        const letters = ['A', 'B', 'C'];
-        const numbers = Array.from({length: 20}, (_, i) => i + 1);
-        let availableCases = [];
-        let history = [];
+   <script>
+    const letters = ['A', 'B', 'C'];
+    const numbers = Array.from({length: 20}, (_, i) => i + 1);
+    let availableCases = [];
+    let history = [];
 
-        const allChallenges = [
-            "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
-            "Imite ton animal préféré pendant 30 secondes.",
-            "Raconte une blague en utilisant uniquement des bruits d'animaux.",
-            "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
-            "Chante le refrain de ta chanson préférée en mode opéra.",
-            "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
-            "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
-            "Invente et démontre un nouveau pas de danse ridicule.",
-            "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
-            "Imite trois célébrités différentes en moins d'une minute.",
-            // Ajoutez ici les 50 défis supplémentaires
-        ];
+    const allChallenges = [
+        "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
+        "Imite ton animal préféré pendant 30 secondes.",
+        "Raconte une blague en utilisant uniquement des bruits d'animaux.",
+        "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
+        "Chante le refrain de ta chanson préférée en mode opéra.",
+        "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
+        "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
+        "Invente et démontre un nouveau pas de danse ridicule.",
+        "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
+        "Imite trois célébrités différentes en moins d'une minute.",
+        // Ajoutez ici les 50 défis supplémentaires
+    ];
 
-        const allQuestions = [
-            "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
-            "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
-            "Quel est ton plus grand regret ?",
-            "Quelle est la chose la plus folle sur ta bucket list ?",
-            "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
-            "Quel est le mensonge le plus important que tu aies jamais dit ?",
-            "Quelle est la chose la plus étrange que tu aies mangée ?",
-            "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
-            "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
-            "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
-            // Ajoutez ici les 50 questions supplémentaires
-        ];
+    const allQuestions = [
+        "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
+        "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
+        "Quel est ton plus grand regret ?",
+        "Quelle est la chose la plus folle sur ta bucket list ?",
+        "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
+        "Quel est le mensonge le plus important que tu aies jamais dit ?",
+        "Quelle est la chose la plus étrange que tu aies mangée ?",
+        "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
+        "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
+        "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
+        // Ajoutez ici les 50 questions supplémentaires
+    ];
 
-        let isGenerating = false;
+    let isGenerating = false;
 
-        function initializeAvailableCases() {
-            availableCases = letters.flatMap(letter => 
-                numbers.map(number => `${letter}${number}`)
-            );
+    function initializeAvailableCases() {
+        availableCases = letters.flatMap(letter => 
+            numbers.map(number => `${letter}${number}`)
+        );
+    }
+
+    function startGeneration() {
+        if (isGenerating) return;
+        isGenerating = true;
+        document.getElementById('generateButton').disabled = true;
+        document.getElementById('invocationSound').play();
+        shuffleDisplay();
+    }
+
+    function shuffleDisplay() {
+        if (availableCases.length === 0) {
+            document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
+            return;
         }
 
-        function startGeneration() {
-            if (isGenerating) return;
-            isGenerating = true;
-            document.getElementById('generateButton').disabled = true;
-            document.getElementById('invocationSound').play();
-            shuffleDisplay();
-        }
+        let shuffleCount = 0;
+        const shuffleInterval = setInterval(() => {
+            const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
+            document.getElementById('result').innerText = randomCase;
+            shuffleCount++;
 
-        function shuffleDisplay() {
-            if (availableCases.length === 0) {
-                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                return;
+            if (shuffleCount >= 50) {
+                clearInterval(shuffleInterval);
+                setTimeout(generateCase, 100);
             }
+        }, 100);
+    }
 
-            let shuffleCount = 0;
-            const shuffleInterval = setInterval(() => {
-                const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
-                document.getElementById('result').innerText = randomCase;
-                shuffleCount++;
+    function getRandomChallenge() {
+        return allChallenges[Math.floor(Math.random() * allChallenges.length)];
+    }
 
-                if (shuffleCount >= 50) {
-                    clearInterval(shuffleInterval);
-                    setTimeout(generateCase, 100);
-                }
-            }, 100);
+    function getRandomQuestion() {
+        return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+    }
+
+    function generateCase() {
+        if (availableCases.length === 0) {
+            document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
+            hideRevealButtons();
+            return;
         }
 
-        function getRandomChallenge() {
-            return allChallenges[Math.floor(Math.random() * allChallenges.length)];
+        const randomIndex = Math.floor(Math.random() * availableCases.length);
+        const newCase = availableCases.splice(randomIndex, 1)[0];
+        
+        document.getElementById('result').innerText = newCase;
+        history.unshift(newCase);
+        if (history.length > 5) history.pop();
+        
+        const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+        const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+        
+        document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
+        document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
+        
+        showRevealButtons();
+        updateHistory();
+        updateRemaining();
+
+        isGenerating = false;
+        document.getElementById('generateButton').disabled = false;
+    }
+
+    function showRevealButtons() {
+        document.getElementById('revealButton1').classList.remove('hidden');
+        document.getElementById('revealButton2').classList.remove('hidden');
+        document.querySelector('#challenge1 p').classList.add('hidden');
+        document.querySelector('#challenge2 p').classList.add('hidden');
+    }
+
+    function hideRevealButtons() {
+        document.getElementById('revealButton1').classList.add('hidden');
+        document.getElementById('revealButton2').classList.add('hidden');
+        document.querySelector('#challenge1 p').classList.add('hidden');
+        document.querySelector('#challenge2 p').classList.add('hidden');
+    }
+
+    function revealChallenge(team) {
+        document.querySelector(`#challenge${team} p`).classList.remove('hidden');
+        document.querySelector(`#revealButton${team}`).classList.add('hidden');
+    }
+
+    function updateHistory() {
+        const historyElement = document.getElementById('history');
+        historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
+    }
+
+    function updateRemaining() {
+        const remainingElement = document.getElementById('remaining');
+        remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
+    }
+
+    function moveGhost() {
+        const ghost = document.getElementById('ghost');
+        const maxX = window.innerWidth - ghost.offsetWidth;
+        const maxY = window.innerHeight - ghost.offsetHeight;
+
+        function animate() {
+            const newX = Math.random() * (maxX - 100);
+            const newY = Math.random() * (maxY - 100);
+            ghost.style.left = `${newX}px`;
+            ghost.style.top = `${newY}px`;
+            ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            setTimeout(animate, 5000 + Math.random() * 3000);
         }
 
-        function getRandomQuestion() {
-            return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+        animate();
+    }
+
+    function checkGhostVisibility() {
+        const ghost = document.getElementById('ghost');
+        const rect = ghost.getBoundingClientRect();
+        const isVisible = (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+
+        if (!isVisible) {
+            ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
+            ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
         }
+    }
 
-        function generateCase() {
-            if (availableCases.length === 0) {
-                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                hideRevealButtons();
-                return;
-            }
+    window.onload = function() {
+        initializeAvailableCases();
+        updateRemaining();
+        moveGhost();
+        setInterval(checkGhostVisibility, 1000);
+    };
 
-            const randomIndex = Math.floor(Math.random() * availableCases.length);
-            const newCase = availableCases.splice(randomIndex, 1)[0];
-            
-            document.getElementById('result').innerText = newCase;
-            history.unshift(newCase);
-            if (history.length > 5) history.pop();
-            
-            const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
-            const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
-            
-            document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
-            document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
-            
-            showRevealButtons();
-            updateHistory();
-            updateRemaining();
-
-            isGenerating = false;
-            document.getElementById('generateButton').disabled = false;
-        }
-
-        function showRevealButtons() {
-            document.getElementById('revealButton1').classList.remove('hidden');
-            document.getElementById('revealButton2').classList.remove('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
-        }
-
-        function hideRevealButtons() {
-            document.getElementById('revealButton1').classList.add('hidden');
-            document.getElementById('revealButton2').classList.add('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
-        }
-
-        function revealChallenge(team) {
-            document.querySelector(`#challenge${team} p`).classList.remove('hidden');
-            document.querySelector(`#revealButton${team}`).classList.add('hidden');
-        }
-
-        function updateHistory() {
-            const historyElement = document.getElementById('history');
-            historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
-        }
-
-        function updateRemaining() {
-            const remainingElement = document.getElementById('remaining');
-            remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
-        }
-
-        function moveGhost() {
-            const ghost = document.getElementById('ghost');
-            const maxX = window.innerWidth - ghost.offsetWidth;
-            const maxY = window.innerHeight - ghost.offsetHeight;
-
-            function animate() {
-                const newX = Math.random() * (maxX - 100);
-                const newY = Math.random() * (maxY - 100);
-                ghost.style.left = `${newX}px`;
-                ghost.style.top = `${newY}px`;
-                ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-                setTimeout(animate, 5000 + Math.random() * 3000);
-            }
-
-            animate();
-        }
-
-        function checkGhostVisibility() {
-            const ghost = document.getElementById('ghost');
-            const rect = ghost.getBoundingClientRect();
-            const isVisible = (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-
-            if (!isVisible) {
-                ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
-                ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
-            }
-        }
-
-        window.onload = function() {
-            initializeAvailableCases();
-            updateRemaining();
-            moveGhost();
-            setInterval(checkGhostVisibility, 1000);
-        };
-
-        window.addEventListener('resize', moveGhost);
-    </script>
+    window.addEventListener('resize', moveGhost);
+</script>
 </body>
 </html>
