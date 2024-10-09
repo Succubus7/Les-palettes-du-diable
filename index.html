@@ -109,7 +109,7 @@
             z-index: 1000;
             transition: all 5s ease-in-out;
         }
-                .reveal-button {
+        .reveal-button {
             font-size: 24px;
             padding: 10px 20px;
             cursor: pointer;
@@ -131,7 +131,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
- <div id="ghost"></div>
+    <div id="ghost"></div>
     <div class="container">
         <h1>Générateur de Case Halloween</h1>
         <div id="result">-</div>
@@ -231,7 +231,7 @@
             return allQuestions[Math.floor(Math.random() * allQuestions.length)];
         }
 
- function generateCase() {
+        function generateCase() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
                 hideRevealButtons();
@@ -276,27 +276,6 @@
         function revealChallenge(team) {
             document.querySelector(`#challenge${team} p`).classList.remove('hidden');
             document.querySelector(`#revealButton${team}`).classList.add('hidden');
-        }
-
-
-            const randomIndex = Math.floor(Math.random() * availableCases.length);
-            const newCase = availableCases.splice(randomIndex, 1)[0];
-            
-            document.getElementById('result').innerText = newCase;
-            history.unshift(newCase);
-            if (history.length > 5) history.pop();
-            
-            const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
-            const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
-            
-            document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
-            document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
-            
-            updateHistory();
-            updateRemaining();
-
-            isGenerating = false;
-            document.getElementById('generateButton').disabled = false;
         }
 
         function updateHistory() {
