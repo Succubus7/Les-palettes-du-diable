@@ -1,4 +1,5 @@
-const letters = ['A', 'B', 'C'];
+<script>
+    const letters = ['A', 'B', 'C'];
 const numbers = Array.from({length: 20}, (_, i) => i + 1);
 let availableCases = [];
 let history = [];
@@ -172,3 +173,4 @@ window.onload = function() {
 };
 
 window.addEventListener('resize', moveGhost);
+</script>
