@@ -109,11 +109,29 @@
             z-index: 1000;
             transition: all 5s ease-in-out;
         }
+                .reveal-button {
+            font-size: 24px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff6600;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .reveal-button:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="ghost"></div>
+ <div id="ghost"></div>
     <div class="container">
         <h1>Générateur de Case Halloween</h1>
         <div id="result">-</div>
@@ -121,11 +139,13 @@
         <div class="teams-container">
             <div class="team" id="challenge1">
                 <h3>Équipe 1</h3>
-                <p></p>
+                <button onclick="revealChallenge(1)" class="reveal-button hidden" id="revealButton1">Découvrir</button>
+                <p class="hidden"></p>
             </div>
             <div class="team" id="challenge2">
                 <h3>Équipe 2</h3>
-                <p></p>
+                <button onclick="revealChallenge(2)" class="reveal-button hidden" id="revealButton2">Découvrir</button>
+                <p class="hidden"></p>
             </div>
         </div>
         <div id="history"></div>
@@ -211,15 +231,53 @@
             return allQuestions[Math.floor(Math.random() * allQuestions.length)];
         }
 
-        function generateCase() {
+ function generateCase() {
             if (availableCases.length === 0) {
                 document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                document.querySelector('#challenge1 p').innerText = "";
-                document.querySelector('#challenge2 p').innerText = "";
-                isGenerating = false;
-                document.getElementById('generateButton').disabled = false;
+                hideRevealButtons();
                 return;
             }
+
+            const randomIndex = Math.floor(Math.random() * availableCases.length);
+            const newCase = availableCases.splice(randomIndex, 1)[0];
+            
+            document.getElementById('result').innerText = newCase;
+            history.unshift(newCase);
+            if (history.length > 5) history.pop();
+            
+            const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+            const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+            
+            document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
+            document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
+            
+            showRevealButtons();
+            updateHistory();
+            updateRemaining();
+
+            isGenerating = false;
+            document.getElementById('generateButton').disabled = false;
+        }
+
+        function showRevealButtons() {
+            document.getElementById('revealButton1').classList.remove('hidden');
+            document.getElementById('revealButton2').classList.remove('hidden');
+            document.querySelector('#challenge1 p').classList.add('hidden');
+            document.querySelector('#challenge2 p').classList.add('hidden');
+        }
+
+        function hideRevealButtons() {
+            document.getElementById('revealButton1').classList.add('hidden');
+            document.getElementById('revealButton2').classList.add('hidden');
+            document.querySelector('#challenge1 p').classList.add('hidden');
+            document.querySelector('#challenge2 p').classList.add('hidden');
+        }
+
+        function revealChallenge(team) {
+            document.querySelector(`#challenge${team} p`).classList.remove('hidden');
+            document.querySelector(`#revealButton${team}`).classList.add('hidden');
+        }
+
 
             const randomIndex = Math.floor(Math.random() * availableCases.length);
             const newCase = availableCases.splice(randomIndex, 1)[0];
