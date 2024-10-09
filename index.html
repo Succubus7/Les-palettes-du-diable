@@ -99,14 +99,6 @@
             font-size: 24px;
             margin-top: 30px;
         }
-                @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -50px) rotate(5deg); }
-            50% { transform: translate(100px, 0) rotate(0deg); }
-            75% { transform: translate(50px, 50px) rotate(-5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
         #ghost {
             position: fixed;
             width: 100px;
@@ -114,19 +106,14 @@
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z" fill="white"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            animation: float 10s infinite ease-in-out;
             z-index: 1000;
+            transition: all 5s ease-in-out;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="ghost"></div>
-
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-</head>
-<body>
     <div class="container">
         <h1>Générateur de Case Halloween</h1>
         <div id="result">-</div>
@@ -147,7 +134,7 @@
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
 
-  <script>
+    <script>
         const letters = ['A', 'B', 'C'];
         const numbers = Array.from({length: 20}, (_, i) => i + 1);
         let availableCases = [];
@@ -264,32 +251,47 @@
             remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
         }
 
-        // Initialiser le jeu
-        initializeAvailableCases();
-        updateRemaining();
-
         function moveGhost() {
             const ghost = document.getElementById('ghost');
             const maxX = window.innerWidth - ghost.offsetWidth;
             const maxY = window.innerHeight - ghost.offsetHeight;
 
             function animate() {
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
+                const newX = Math.random() * (maxX - 100);
+                const newY = Math.random() * (maxY - 100);
                 ghost.style.left = `${newX}px`;
                 ghost.style.top = `${newY}px`;
-                setTimeout(animate, 10000 + Math.random() * 5000); // Change de position toutes les 10-15 secondes
+                ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+                setTimeout(animate, 5000 + Math.random() * 3000);
             }
 
             animate();
         }
 
-        // Appelez cette fonction au chargement de la page
+        function checkGhostVisibility() {
+            const ghost = document.getElementById('ghost');
+            const rect = ghost.getBoundingClientRect();
+            const isVisible = (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+
+            if (!isVisible) {
+                ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
+                ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
+            }
+        }
+
         window.onload = function() {
             initializeAvailableCases();
             updateRemaining();
             moveGhost();
+            setInterval(checkGhostVisibility, 1000);
         };
+
+        window.addEventListener('resize', moveGhost);
     </script>
 </body>
 </html>
