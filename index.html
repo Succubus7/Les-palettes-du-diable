@@ -5,6 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T.C.S. 2024</title>
 <style>
+    body {
+    font-family: 'Creepster', cursive;
+    margin: 0;
+    padding: 0;
+    color: #ff6600;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+#video-background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    background: #000;
+}
+
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: relative;
+    z-index: 1;
+}
 
 
     @keyframes fadeIn {
@@ -26,28 +61,7 @@
         50% { transform: translateY(-10px); }
         100% { transform: translateY(0px); }
     }
-    body {
-        font-family: 'Creepster', cursive;
-        margin: 0;
-        padding: 0;
-        background-image: url('https://zupimages.net/up/24/39/a699.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #ff6600;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    .container {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.7);
-    }
+
     h1 {
         font-size: 72px;
         margin-bottom: 30px;
@@ -151,6 +165,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
+        <div id="video-background">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/vuPhCSunt5U?autoplay=1&mute=1&loop=1&playlist=vuPhCSunt5U&controls=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+    </div>
     <div id="ghost"></div>
     <div class="container">
         <h1>Bienvenue au T.C.S.</h1>
