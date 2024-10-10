@@ -123,11 +123,6 @@
         z-index: 1000;
         transition: all 5s ease-in-out;
     }
-    #grim-reaper {
-        width: 250px;
-        height: auto;
-        animation: float 3s ease-in-out infinite;
-    }
     .reveal-button {
         font-size: 24px;
         padding: 10px 20px;
@@ -147,27 +142,69 @@
     .hidden {
         display: none;
     }
+      .grim-reaper-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        #grim-reaper {
+            width: 100%;
+            height: 100%;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .grim-reaper-container:hover #grim-reaper {
+            transform: scale(1.05);
+            filter: brightness(1.2) contrast(1.2);
+        }
+
+        .grim-reaper-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff6600;
+            font-size: 24px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            pointer-events: none;
+        }
+
+        .grim-reaper-container:hover .grim-reaper-text {
+            opacity: 1;
+        }
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="ghost"></div>
+ <div id="ghost"></div>
     <div class="container">
         <h1>Bienvenue au T.C.S.</h1>
         <div id="result">-</div>
-        <button onclick="startGeneration()" id="generateButton">Invoquer une case</button>
         <div class="teams-container">
             <div class="team" id="challenge1">
                 <h3>Équipe 1</h3>
                 <p class="hidden"></p>
                 <button onclick="revealChallenge(1)" class="reveal-button hidden" id="revealButton1">Découvrir</button>
             </div>
-            <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
+            <div class="grim-reaper-container" onclick="startGeneration()">
+                <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
+                <div class="grim-reaper-text">Invoquer une case</div>
+            </div>
             <div class="team" id="challenge2">
                 <h3>Équipe 2</h3>
                 <p class="hidden"></p>
                 <button onclick="revealChallenge(2)" class="reveal-button hidden" id="revealButton2">Découvrir</button>
             </div>
+        </div>
+        <div id="history"></div>
+        <div id="remaining"></div>
+    </div>v>
         </div>
         <div id="history"></div>
         <div id="remaining"></div>
