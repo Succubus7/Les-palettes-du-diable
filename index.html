@@ -20,16 +20,11 @@
             50% { text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600; }
             100% { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600; }
         }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://cdn.midjourney.com/4091e970-9564-400d-b2d2-250c248f45cf/0_0.png');
+            background-image: url('https://cdn.midjourney.com/e565ccde-30a4-4902-925a-f9b1e37121f3/0_3.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -106,7 +101,48 @@
             z-index: 1000;
             transition: all 5s ease-in-out;
         }
-        .reveal-button, .grim-reaper-container {
+        .grim-reaper-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #grim-reaper {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+        .grim-reaper-text {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff6600;
+            font-size: 24px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            pointer-events: none;
+            width: 100%;
+        }
+        .grim-reaper-container:hover #grim-reaper {
+            transform: scale(1.05);
+            filter: brightness(1.2) contrast(1.2);
+        }
+        .grim-reaper-container:hover .grim-reaper-text {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+        .reveal-button {
             font-size: 24px;
             padding: 10px 20px;
             cursor: pointer;
@@ -118,58 +154,13 @@
             margin-top: 10px;
             align-self: flex-start;
         }
-        .reveal-button:hover, .grim-reaper-container:hover {
+        .reveal-button:hover {
             background-color: #ff8533;
             transform: scale(1.05);
         }
         .hidden {
             display: none;
         }
-.grim-reaper-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    cursor: pointer;
-    background: none;
-    padding: 0;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#grim-reaper {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.grim-reaper-text {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #ff6600;
-    font-size: 24px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    pointer-events: none;
-    width: 100%;
-}
-
-.grim-reaper-container:hover #grim-reaper {
-    transform: scale(1.05);
-    filter: brightness(1.2) contrast(1.2);
-}
-
-.grim-reaper-container:hover .grim-reaper-text {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-10px);
-}
         .potion-checkbox {
             display: none;
         }
@@ -187,51 +178,50 @@
             background-color: #1a1a1a;
             color: #ff6600;
         }
-    .overlay {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.9);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .overlay-content {
-        background-color: #1a1a1a;
-        color: #ff6600;
-        padding: 20px;
-        border: 2px solid #ff6600;
-        border-radius: 10px;
-        text-align: center;
-    }
-    .overlay-content h2 {
-        margin-bottom: 20px;
-    }
-    .overlay-content input {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 5px;
-        border: 1px solid #ff6600;
-        background-color: #333;
-        color: #ff6600;
-    }
-    .overlay-content button {
-        background-color: #ff6600;
-        color: #1a1a1a;
-        border: none;
-        padding: 10px 20px;
-        margin-top: 20px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .overlay-content button:hover {
-        background-color: #ff8533;
-    }
-</style>
+        .overlay {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay-content {
+            background-color: #1a1a1a;
+            color: #ff6600;
+            padding: 20px;
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .overlay-content h2 {
+            margin-bottom: 20px;
+        }
+        .overlay-content input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 5px;
+            border: 1px solid #ff6600;
+            background-color: #333;
+            color: #ff6600;
+        }
+        .overlay-content button {
+            background-color: #ff6600;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .overlay-content button:hover {
+            background-color: #ff8533;
+        }
     </style>
 </head>
 <body>
@@ -249,10 +239,10 @@
                     <button onclick="revealChallenge(1)" class="reveal-button" id="revealButton1">Découvrir</button>
                 </div>
             </div>
-<div class="grim-reaper-container" onclick="startGeneration()">
-    <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper">
-    <div class="grim-reaper-text">Invoquer une case</div>
-</div>
+            <div class="grim-reaper-container" onclick="startGeneration()">
+                <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper">
+                <div class="grim-reaper-text">Invoquer une case</div>
+            </div>
             <div class="team" id="challenge2">
                 <h3>Équipe 2</h3>
                 <p class="hidden"></p>
@@ -267,8 +257,18 @@
         <div id="remaining"></div>
     </div>
 
+    <div id="teamNameOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Nommez vos équipes</h2>
+            <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
+            <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
+            <button onclick="saveTeamNames()">Commencer le jeu</button>
+        </div>
+    </div>
+
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
-<script>
+
+    <script>
     const letters = ['A', 'B', 'C'];
     const numbers = Array.from({length: 20}, (_, i) => i + 1);
     let availableCases = [];
@@ -485,17 +485,7 @@
         }
     }
 
-    window.onload = function() {
-        initializeBoards();
-        availableCases = Object.keys(team1Board);
-        updateRemaining();
-        moveGhost();
-        setInterval(checkGhostVisibility, 1000);
-    };
-
-    window.addEventListener('resize', moveGhost);
-
-      function saveTeamNames() {
+    function saveTeamNames() {
         const team1Name = document.getElementById('team1Name').value || "Équipe 1";
         const team2Name = document.getElementById('team2Name').value || "Équipe 2";
         
@@ -505,22 +495,16 @@
         document.getElementById('teamNameOverlay').style.display = 'none';
     }
 
-    // Ajoutez ceci à votre fonction window.onload existante ou créez-en une nouvelle si elle n'existe pas
     window.onload = function() {
-        // Vos initialisations existantes ici
-        
-        // Affichage de l'encart des noms d'équipes
+        initializeBoards();
+        availableCases = Object.keys(team1Board);
+        updateRemaining();
+        moveGhost();
+        setInterval(checkGhostVisibility, 1000);
         document.getElementById('teamNameOverlay').style.display = 'flex';
     };
-        }
+
+    window.addEventListener('resize', moveGhost);
 </script>
-    <div id="teamNamePopup" class="popup">
-    <div class="popup-content">
-        <h2>Nommez les équipes</h2>
-        <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
-        <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
-        <button onclick="saveTeamNames()">Commencer le jeu</button>
-    </div>
-</div>
-</body>
+</body>    
 </html>
