@@ -347,6 +347,7 @@
         document.querySelector('#challenge2 p').innerText = team2Action === "vide" ? "Case vide" : team2Action;
         
         showRevealButtons();
+        showPotionCheckboxes();
         updateHistory();
         updateRemaining();
 
@@ -368,9 +369,27 @@
         document.querySelector('#challenge2 p').classList.add('hidden');
     }
 
+    function showPotionCheckboxes() {
+        document.getElementById('potionCheckbox1').classList.remove('hidden');
+        document.getElementById('potionCheckbox2').classList.remove('hidden');
+    }
+
+    function hidePotionCheckboxes() {
+        document.getElementById('potionCheckbox1').classList.add('hidden');
+        document.getElementById('potionCheckbox2').classList.add('hidden');
+    }
+
     function revealChallenge(team) {
-        document.querySelector(`#challenge${team} p`).classList.remove('hidden');
+        const checkbox = document.getElementById(`potionCheckbox${team}`);
+        const challengeText = document.querySelector(`#challenge${team} p`);
+        
+        if (checkbox.checked) {
+            challengeText.innerText = "Boire la fiole";
+        }
+        
+        challengeText.classList.remove('hidden');
         document.querySelector(`#revealButton${team}`).classList.add('hidden');
+        checkbox.classList.add('hidden');
     }
 
     function updateHistory() {
