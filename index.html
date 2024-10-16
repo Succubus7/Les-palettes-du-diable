@@ -243,6 +243,7 @@
         "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
         "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
         "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
+        // Ajoutez ici 30 actions supplémentaires pour atteindre un total de 50 actions
     ];
 
     let availableActions = [...allActions];
@@ -272,32 +273,25 @@
         for (let i = 0; i < allCases.length; i++) {
             const currentCase = allCases[i];
             
-            // Équipe 1
+            // Pour les deux équipes
             if (i < 15) {
                 team1Board[currentCase] = "vide";
-            } else {
-                team1Board[currentCase] = getUniqueAction();
-            }
-
-            // Équipe 2
-            if (i < 15) {
                 team2Board[currentCase] = "vide";
             } else {
+                team1Board[currentCase] = getUniqueAction();
                 team2Board[currentCase] = getUniqueAction();
             }
         }
 
-        // Mélanger à nouveau les cases pour l'équipe 2
+        // Mélanger à nouveau les cases pour l'équipe 2 pour assurer une distribution différente
         const team2Cases = Object.keys(team2Board);
         shuffleArray(team2Cases);
-        const team2EmptyCases = team2Cases.slice(0, 15);
-        const team2ActionCases = team2Cases.slice(15);
 
         team2Cases.forEach((c, i) => {
             if (i < 15) {
                 team2Board[c] = "vide";
             } else {
-                team2Board[c] = team2Board[team2ActionCases[i - 15]];
+                team2Board[c] = getUniqueAction();
             }
         });
     }
