@@ -187,30 +187,30 @@
             background-color: #1a1a1a;
             color: #ff6600;
         }
-         .popup {
-        display: none;
+    .overlay {
         position: fixed;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0,0.7);
+        background-color: rgba(0,0,0,0.9);
         z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .popup-content {
+    .overlay-content {
         background-color: #1a1a1a;
         color: #ff6600;
-        margin: 15% auto;
         padding: 20px;
-        border: 1px solid #ff6600;
-        width: 300px;
-        text-align: center;
+        border: 2px solid #ff6600;
         border-radius: 10px;
+        text-align: center;
     }
-    .popup-content h2 {
+    .overlay-content h2 {
         margin-bottom: 20px;
     }
-    .popup-content input {
+    .overlay-content input {
         display: block;
         width: 100%;
         margin: 10px 0;
@@ -219,7 +219,7 @@
         background-color: #333;
         color: #ff6600;
     }
-    .popup-content button {
+    .overlay-content button {
         background-color: #ff6600;
         color: #1a1a1a;
         border: none;
@@ -228,9 +228,10 @@
         cursor: pointer;
         transition: background-color 0.3s;
     }
-    .popup-content button:hover {
+    .overlay-content button:hover {
         background-color: #ff8533;
     }
+</style>
     </style>
 </head>
 <body>
@@ -494,41 +495,23 @@
 
     window.addEventListener('resize', moveGhost);
 
-     function showTeamNamePopup() {
-        document.getElementById('teamNamePopup').style.display = 'block';
-    }
-
-    function saveTeamNames() {
+      function saveTeamNames() {
         const team1Name = document.getElementById('team1Name').value || "Équipe 1";
         const team2Name = document.getElementById('team2Name').value || "Équipe 2";
         
         document.querySelector('#challenge1 h3').textContent = team1Name;
         document.querySelector('#challenge2 h3').textContent = team2Name;
         
-        document.getElementById('teamNamePopup').style.display = 'none';
-        
-        // Enregistrez les noms d'équipe dans le stockage local pour les futures sessions
-        localStorage.setItem('team1Name', team1Name);
-        localStorage.setItem('team2Name', team2Name);
+        document.getElementById('teamNameOverlay').style.display = 'none';
     }
 
-    // Modifiez la fonction window.onload existante
+    // Ajoutez ceci à votre fonction window.onload existante ou créez-en une nouvelle si elle n'existe pas
     window.onload = function() {
-        initializeBoards();
-        availableCases = Object.keys(team1Board);
-        updateRemaining();
-        moveGhost();
-        setInterval(checkGhostVisibility, 1000);
-
-        // Vérifiez si les noms d'équipe sont déjà enregistrés
-        const savedTeam1Name = localStorage.getItem('team1Name');
-        const savedTeam2Name = localStorage.getItem('team2Name');
-
-        if (savedTeam1Name && savedTeam2Name) {
-            document.querySelector('#challenge1 h3').textContent = savedTeam1Name;
-            document.querySelector('#challenge2 h3').textContent = savedTeam2Name;
-        } else {
-            showTeamNamePopup();
+        // Vos initialisations existantes ici
+        
+        // Affichage de l'encart des noms d'équipes
+        document.getElementById('teamNameOverlay').style.display = 'flex';
+    };
         }
 </script>
     <div id="teamNamePopup" class="popup">
