@@ -208,11 +208,15 @@
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
 
-  <script>
+<script>
     const letters = ['A', 'B', 'C'];
     const numbers = Array.from({length: 20}, (_, i) => i + 1);
     let availableCases = [];
     let history = [];
+    let isGenerating = false;
+
+    const team1Board = {};
+    const team2Board = {};
 
     const allChallenges = [
         "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
@@ -225,7 +229,7 @@
         "Invente et démontre un nouveau pas de danse ridicule.",
         "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
         "Imite trois célébrités différentes en moins d'une minute.",
-        // Ajoutez ici les 50 défis supplémentaires
+        // Ajoutez ici les défis supplémentaires
     ];
 
     const allQuestions = [
@@ -239,15 +243,55 @@
         "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
         "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
         "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
-        // Ajoutez ici les 50 questions supplémentaires
+        // Ajoutez ici les questions supplémentaires
     ];
 
-    let isGenerating = false;
-
-    function initializeAvailableCases() {
-        availableCases = letters.flatMap(letter => 
+    function initializeBoards() {
+        const allCases = letters.flatMap(letter => 
             numbers.map(number => `${letter}${number}`)
         );
+
+        const shuffledCases = allCases.sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < shuffledCases.length; i++) {
+            const currentCase = shuffledCases[i];
+            
+            // Équipe 1
+            if (i < 15) {
+                team1Board[currentCase] = "vide";
+            } else {
+                team1Board[currentCase] = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+            }
+
+            // Équipe 2
+            if (i < 15) {
+                team2Board[currentCase] = "vide";
+            } else {
+                team2Board[currentCase] = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+            }
+        }
+
+        // Mélanger à nouveau les cases pour l'équipe 2
+        const team2Cases = Object.keys(team2Board);
+        team2Cases.sort(() => Math.random() - 0.5);
+        const team2EmptyCases = team2Cases.slice(0, 15);
+        const team2ActionCases = team2Cases.slice(15);
+
+        team2Cases.forEach((c, i) => {
+            if (i < 15) {
+                team2Board[c] = "vide";
+            } else {
+                team2Board[c] = team2Board[team2ActionCases[i - 15]];
+            }
+        });
+    }
+
+    function getRandomChallenge() {
+        return allChallenges[Math.floor(Math.random() * allChallenges.length)];
+    }
+
+    function getRandomQuestion() {
+        return allQuestions[Math.floor(Math.random() * allQuestions.length)];
     }
 
     function startGeneration() {
@@ -277,14 +321,6 @@
         }, 100);
     }
 
-    function getRandomChallenge() {
-        return allChallenges[Math.floor(Math.random() * allChallenges.length)];
-    }
-
-    function getRandomQuestion() {
-        return allQuestions[Math.floor(Math.random() * allQuestions.length)];
-    }
-
     function generateCase() {
         if (availableCases.length === 0) {
             document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
@@ -299,11 +335,11 @@
         history.unshift(newCase);
         if (history.length > 5) history.pop();
         
-        const challengeOrQuestion1 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
-        const challengeOrQuestion2 = Math.random() < 0.5 ? getRandomChallenge() : getRandomQuestion();
+        const team1Action = team1Board[newCase];
+        const team2Action = team2Board[newCase];
         
-        document.querySelector('#challenge1 p').innerText = challengeOrQuestion1;
-        document.querySelector('#challenge2 p').innerText = challengeOrQuestion2;
+        document.querySelector('#challenge1 p').innerText = team1Action === "vide" ? "Case vide" : team1Action;
+        document.querySelector('#challenge2 p').innerText = team2Action === "vide" ? "Case vide" : team2Action;
         
         showRevealButtons();
         updateHistory();
@@ -376,7 +412,8 @@
     }
 
     window.onload = function() {
-        initializeAvailableCases();
+        initializeBoards();
+        availableCases = Object.keys(team1Board); // ou team2Board, ils ont les mêmes clés
         updateRemaining();
         moveGhost();
         setInterval(checkGhostVisibility, 1000);
