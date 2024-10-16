@@ -183,130 +183,31 @@
     <div class="container">
         <h1>Bienvenue au T.C.S.</h1>
         <div id="result">-</div>
-function generateCase() {
-            if (availableCases.length === 0) {
-                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                hideRevealButtons();
-                return;
-            }
-
-            const randomIndex = Math.floor(Math.random() * availableCases.length);
-            const newCase = availableCases.splice(randomIndex, 1)[0];
-            
-            document.getElementById('result').innerText = newCase;
-            history.unshift(newCase);
-            if (history.length > 5) history.pop();
-            
-            const team1Action = team1Board[newCase];
-            const team2Action = team2Board[newCase];
-            
-            document.querySelector('#challenge1 p').innerText = team1Action === "vide" ? "Case vide" : team1Action;
-            document.querySelector('#challenge2 p').innerText = team2Action === "vide" ? "Case vide" : team2Action;
-            
-            showRevealButtons();
-            showPotionCheckboxes();
-            updateHistory();
-            updateRemaining();
-
-            isGenerating = false;
-            document.querySelector('.grim-reaper-container').style.pointerEvents = 'auto';
-        }
-
-        function showRevealButtons() {
-            document.getElementById('revealButton1').classList.remove('hidden');
-            document.getElementById('revealButton2').classList.remove('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
-        }
-
-        function hideRevealButtons() {
-            document.getElementById('revealButton1').classList.add('hidden');
-            document.getElementById('revealButton2').classList.add('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
-        }
-
-        function showPotionCheckboxes() {
-            document.getElementById('potionCheckbox1').classList.remove('hidden');
-            document.getElementById('potionCheckbox2').classList.remove('hidden');
-            document.querySelector('label[for="potionCheckbox1"]').classList.remove('hidden');
-            document.querySelector('label[for="potionCheckbox2"]').classList.remove('hidden');
-        }
-
-        function hidePotionCheckboxes() {
-            document.getElementById('potionCheckbox1').classList.add('hidden');
-            document.getElementById('potionCheckbox2').classList.add('hidden');
-            document.querySelector('label[for="potionCheckbox1"]').classList.add('hidden');
-            document.querySelector('label[for="potionCheckbox2"]').classList.add('hidden');
-        }
-
-        function revealChallenge(team) {
-            const checkbox = document.getElementById(`potionCheckbox${team}`);
-            const challengeText = document.querySelector(`#challenge${team} p`);
-            
-            if (checkbox.checked) {
-                challengeText.innerText = "Boire la fiole";
-            }
-            
-            challengeText.classList.remove('hidden');
-            document.querySelector(`#revealButton${team}`).classList.add('hidden');
-            checkbox.classList.add('hidden');
-            document.querySelector(`label[for="potionCheckbox${team}"]`).classList.add('hidden');
-        }
-
-        function updateHistory() {
-            const historyElement = document.getElementById('history');
-            historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
-        }
-
-        function updateRemaining() {
-            const remainingElement = document.getElementById('remaining');
-            remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
-        }
-
-        function moveGhost() {
-            const ghost = document.getElementById('ghost');
-            const maxX = window.innerWidth - ghost.offsetWidth;
-            const maxY = window.innerHeight - ghost.offsetHeight;
-
-            function animate() {
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
-                ghost.style.left = `${newX}px`;
-                ghost.style.top = `${newY}px`;
-                ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-                setTimeout(animate, 5000 + Math.random() * 3000);
-            }
-
-            animate();
-        }
-
-        function checkGhostVisibility() {
-            const ghost = document.getElementById('ghost');
-            const rect = ghost.getBoundingClientRect();
-            const isVisible = (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-
-            if (!isVisible) {
-                ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
-                ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
-            }
-        }
-
-        window.onload = function() {
-            initializeBoards();
-            availableCases = Object.keys(team1Board);
-            updateRemaining();
-            moveGhost();
-            setInterval(checkGhostVisibility, 1000);
-        };
-
-        window.addEventListener('resize', moveGhost);
-    </script>
+<!-- HTML pour les équipes -->
+<div class="teams-container">
+    <div class="team" id="challenge1">
+        <h3>Équipe 1</h3>
+        <p class="hidden"></p>
+        <div>
+            <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
+            <label for="potionCheckbox1" class="potion-label">Fiole</label>
+            <button onclick="revealChallenge(1)" class="reveal-button" id="revealButton1">Découvrir</button>
+        </div>
+    </div>
+    <div class="grim-reaper-container" onclick="startGeneration()">
+        <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
+        <div class="grim-reaper-text">Invoquer une case</div>
+    </div>
+    <div class="team" id="challenge2">
+        <h3>Équipe 2</h3>
+        <p class="hidden"></p>
+        <div>
+            <input type="checkbox" id="potionCheckbox2" class="potion-checkbox">
+            <label for="potionCheckbox2" class="potion-label">Fiole</label>
+            <button onclick="revealChallenge(2)" class="reveal-button" id="revealButton2">Découvrir</button>
+        </div>
+    </div>
+</div>
             <div class="grim-reaper-container" onclick="startGeneration()">
                 <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
                 <div class="grim-reaper-text">Invoquer une case</div>
