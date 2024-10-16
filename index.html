@@ -183,31 +183,16 @@
     <div class="container">
         <h1>Bienvenue au T.C.S.</h1>
         <div id="result">-</div>
-<!-- HTML pour les équipes -->
-<div class="teams-container">
-    <div class="team" id="challenge1">
-        <h3>Équipe 1</h3>
-        <p class="hidden"></p>
-        <div>
-            <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
-            <label for="potionCheckbox1" class="potion-label">Fiole</label>
-            <button onclick="revealChallenge(1)" class="reveal-button" id="revealButton1">Découvrir</button>
-        </div>
-    </div>
-    <div class="grim-reaper-container" onclick="startGeneration()">
-        <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
-        <div class="grim-reaper-text">Invoquer une case</div>
-    </div>
-    <div class="team" id="challenge2">
-        <h3>Équipe 2</h3>
-        <p class="hidden"></p>
-        <div>
-            <input type="checkbox" id="potionCheckbox2" class="potion-checkbox">
-            <label for="potionCheckbox2" class="potion-label">Fiole</label>
-            <button onclick="revealChallenge(2)" class="reveal-button" id="revealButton2">Découvrir</button>
-        </div>
-    </div>
-</div>
+        <div class="teams-container">
+            <div class="team" id="challenge1">
+                <h3>Équipe 1</h3>
+                <p class="hidden"></p>
+                <div>
+                    <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
+                    <label for="potionCheckbox1" class="potion-label">Fiole</label>
+                    <button onclick="revealChallenge(1)" class="reveal-button" id="revealButton1">Découvrir</button>
+                </div>
+            </div>
             <div class="grim-reaper-container" onclick="startGeneration()">
                 <img id="grim-reaper" src="https://i.postimg.cc/NF27T4tk/Pngtree-horror-grim-reaper-halloween-theme-5471050.png" alt="Grim Reaper">
                 <div class="grim-reaper-text">Invoquer une case</div>
@@ -216,9 +201,9 @@
                 <h3>Équipe 2</h3>
                 <p class="hidden"></p>
                 <div>
-                    <input type="checkbox" id="potionCheckbox2" class="potion-checkbox hidden">
-                    <label for="potionCheckbox2" class="potion-label hidden">Fiole</label>
-                    <button onclick="revealChallenge(2)" class="reveal-button hidden" id="revealButton2">Découvrir</button>
+                    <input type="checkbox" id="potionCheckbox2" class="potion-checkbox">
+                    <label for="potionCheckbox2" class="potion-label">Fiole</label>
+                    <button onclick="revealChallenge(2)" class="reveal-button" id="revealButton2">Découvrir</button>
                 </div>
             </div>
         </div>
@@ -227,197 +212,121 @@
     </div>
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
+<script>
+    const letters = ['A', 'B', 'C'];
+    const numbers = Array.from({length: 20}, (_, i) => i + 1);
+    let availableCases = [];
+    let history = [];
+    let isGenerating = false;
 
-    <script>
-        const letters = ['A', 'B', 'C'];
-        const numbers = Array.from({length: 20}, (_, i) => i + 1);
-        let availableCases = [];
-        let history = [];
-        let isGenerating = false;
+    const team1Board = {};
+    const team2Board = {};
 
-        const team1Board = {};
-        const team2Board = {};
+    const allActions = [
+        "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
+        "Imite ton animal préféré pendant 30 secondes.",
+        "Raconte une blague en utilisant uniquement des bruits d'animaux.",
+        "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
+        "Chante le refrain de ta chanson préférée en mode opéra.",
+        "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
+        "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
+        "Invente et démontre un nouveau pas de danse ridicule.",
+        "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
+        "Imite trois célébrités différentes en moins d'une minute.",
+        "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
+        "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
+        "Quel est ton plus grand regret ?",
+        "Quelle est la chose la plus folle sur ta bucket list ?",
+        "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
+        "Quel est le mensonge le plus important que tu aies jamais dit ?",
+        "Quelle est la chose la plus étrange que tu aies mangée ?",
+        "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
+        "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
+        "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
+    ];
 
-        const allActions = [
-            "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
-            "Imite ton animal préféré pendant 30 secondes.",
-            "Raconte une blague en utilisant uniquement des bruits d'animaux.",
-            "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
-            "Chante le refrain de ta chanson préférée en mode opéra.",
-            "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
-            "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
-            "Invente et démontre un nouveau pas de danse ridicule.",
-            "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
-            "Imite trois célébrités différentes en moins d'une minute.",
-            "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
-            "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
-            "Quel est ton plus grand regret ?",
-            "Quelle est la chose la plus folle sur ta bucket list ?",
-            "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
-            "Quel est le mensonge le plus important que tu aies jamais dit ?",
-            "Quelle est la chose la plus étrange que tu aies mangée ?",
-            "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
-            "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
-            "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
-        ];
+    let availableActions = [...allActions];
 
-        let availableActions = [...allActions];
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
+    }
 
-        function getUniqueAction() {
-            if (availableActions.length === 0) {
-                availableActions = [...allActions];
-                shuffleArray(availableActions);
-            }
-            return availableActions.pop();
+    function getUniqueAction() {
+        if (availableActions.length === 0) {
+            availableActions = [...allActions];
+            shuffleArray(availableActions);
         }
+        return availableActions.pop();
+    }
 
-        function initializeBoards() {
-            const allCases = letters.flatMap(letter => 
-                numbers.map(number => `${letter}${number}`)
-            );
+    function initializeBoards() {
+        const allCases = letters.flatMap(letter => 
+            numbers.map(number => `${letter}${number}`)
+        );
 
-            shuffleArray(allCases);
+        shuffleArray(allCases);
 
-            for (let i = 0; i < allCases.length; i++) {
-                const currentCase = allCases[i];
-                
-                // Équipe 1
-                if (i < 15) {
-                    team1Board[currentCase] = "vide";
-                } else {
-                    team1Board[currentCase] = getUniqueAction();
-                }
-
-                // Équipe 2
-                if (i < 15) {
-                    team2Board[currentCase] = "vide";
-                } else {
-                    team2Board[currentCase] = getUniqueAction();
-                }
-            }
-
-            // Mélanger à nouveau les cases pour l'équipe 2
-            const team2Cases = Object.keys(team2Board);
-            shuffleArray(team2Cases);
-            const team2EmptyCases = team2Cases.slice(0, 15);
-            const team2ActionCases = team2Cases.slice(15);
-
-            team2Cases.forEach((c, i) => {
-                if (i < 15) {
-                    team2Board[c] = "vide";
-                } else {
-                    team2Board[c] = team2Board[team2ActionCases[i - 15]];
-                }
-            });
-        }
-
-        function startGeneration() {
-            if (isGenerating) return;
-            isGenerating = true;
-            document.querySelector('.grim-reaper-container').style.pointerEvents = 'none';
-            document.getElementById('invocationSound').play();
-            shuffleDisplay();
-        }
-
-        function shuffleDisplay() {
-            if (availableCases.length === 0) {
-                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                return;
-            }
-
-            let shuffleCount = 0;
-            const shuffleInterval = setInterval(() => {
-                const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
-                document.getElementById('result').innerText = randomCase;
-                shuffleCount++;
-
-                if (shuffleCount >= 50) {
-                    clearInterval(shuffleInterval);
-                    setTimeout(generateCase, 100);
-                }
-            }, 100);
-        }
-
-function generateCase() {
-            if (availableCases.length === 0) {
-                document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
-                hideRevealButtons();
-                return;
-            }
-
-            const randomIndex = Math.floor(Math.random() * availableCases.length);
-            const newCase = availableCases.splice(randomIndex, 1)[0];
+        for (let i = 0; i < allCases.length; i++) {
+            const currentCase = allCases[i];
             
-            document.getElementById('result').innerText = newCase;
-            history.unshift(newCase);
-            if (history.length > 5) history.pop();
-            
-            const team1Action = team1Board[newCase];
-            const team2Action = team2Board[newCase];
-            
-            document.querySelector('#challenge1 p').innerText = team1Action === "vide" ? "Case vide" : team1Action;
-            document.querySelector('#challenge2 p').innerText = team2Action === "vide" ? "Case vide" : team2Action;
-            
-            showRevealButtons();
-            showPotionCheckboxes();
-            updateHistory();
-            updateRemaining();
+            // Équipe 1
+            if (i < 15) {
+                team1Board[currentCase] = "vide";
+            } else {
+                team1Board[currentCase] = getUniqueAction();
+            }
 
-            isGenerating = false;
-            document.querySelector('.grim-reaper-container').style.pointerEvents = 'auto';
+            // Équipe 2
+            if (i < 15) {
+                team2Board[currentCase] = "vide";
+            } else {
+                team2Board[currentCase] = getUniqueAction();
+            }
         }
 
-        function showRevealButtons() {
-            document.getElementById('revealButton1').classList.remove('hidden');
-            document.getElementById('revealButton2').classList.remove('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
+        // Mélanger à nouveau les cases pour l'équipe 2
+        const team2Cases = Object.keys(team2Board);
+        shuffleArray(team2Cases);
+        const team2EmptyCases = team2Cases.slice(0, 15);
+        const team2ActionCases = team2Cases.slice(15);
+
+        team2Cases.forEach((c, i) => {
+            if (i < 15) {
+                team2Board[c] = "vide";
+            } else {
+                team2Board[c] = team2Board[team2ActionCases[i - 15]];
+            }
+        });
+    }
+
+    function startGeneration() {
+        if (isGenerating) return;
+        isGenerating = true;
+        document.querySelector('.grim-reaper-container').style.pointerEvents = 'none';
+        document.getElementById('invocationSound').play();
+        shuffleDisplay();
+    }
+
+    function shuffleDisplay() {
+        if (availableCases.length === 0) {
+            document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
+            return;
         }
 
-        function hideRevealButtons() {
-            document.getElementById('revealButton1').classList.add('hidden');
-            document.getElementById('revealButton2').classList.add('hidden');
-            document.querySelector('#challenge1 p').classList.add('hidden');
-            document.querySelector('#challenge2 p').classList.add('hidden');
-        }
+        let shuffleCount = 0;
+        const shuffleInterval = setInterval(() => {
+            const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
+            document.getElementById('result').innerText = randomCase;
+            shuffleCount++;
 
-        function showPotionCheckboxes() {
-            document.getElementById('potionCheckbox1').classList.remove('hidden');
-            document.getElementById('potionCheckbox2').classList.remove('hidden');
-            document.querySelector('label[for="potionCheckbox1"]').classList.remove('hidden');
-            document.querySelector('label[for="potionCheckbox2"]').classList.remove('hidden');
-        }
-
-        function hidePotionCheckboxes() {
-            document.getElementById('potionCheckbox1').classList.add('hidden');
-            document.getElementById('potionCheckbox2').classList.add('hidden');
-            document.querySelector('label[for="potionCheckbox1"]').classList.add('hidden');
-            document.querySelector('label[for="potionCheckbox2"]').classList.add('hidden');
-        }
-
-function revealChallenge(team) {
-        const checkbox = document.getElementById(`potionCheckbox${team}`);
-        const challengeText = document.querySelector(`#challenge${team} p`);
-        const currentCase = document.getElementById('result').innerText;
-        
-        if (checkbox.checked) {
-            challengeText.innerText = "Boire la fiole";
-        } else {
-            const teamBoard = team === 1 ? team1Board : team2Board;
-            const action = teamBoard[currentCase];
-            challengeText.innerText = action === "vide" ? "Case vide" : action;
-        }
-        
-        challengeText.classList.remove('hidden');
-        document.querySelector(`#revealButton${team}`).classList.add('hidden');
-        checkbox.disabled = true;  // Désactive la case à cocher après la révélation
+            if (shuffleCount >= 50) {
+                clearInterval(shuffleInterval);
+                setTimeout(generateCase, 100);
+            }
+        }, 100);
     }
 
     function generateCase() {
@@ -450,6 +359,13 @@ function revealChallenge(team) {
         document.querySelector('#challenge2 p').classList.add('hidden');
     }
 
+    function hideRevealButtons() {
+        document.getElementById('revealButton1').classList.add('hidden');
+        document.getElementById('revealButton2').classList.add('hidden');
+        document.querySelector('#challenge1 p').classList.add('hidden');
+        document.querySelector('#challenge2 p').classList.add('hidden');
+    }
+
     function resetPotionCheckboxes() {
         const checkboxes = document.querySelectorAll('.potion-checkbox');
         checkboxes.forEach(checkbox => {
@@ -458,58 +374,76 @@ function revealChallenge(team) {
         });
     }
 
-        function updateHistory() {
-            const historyElement = document.getElementById('history');
-            historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
+    function revealChallenge(team) {
+        const checkbox = document.getElementById(`potionCheckbox${team}`);
+        const challengeText = document.querySelector(`#challenge${team} p`);
+        const currentCase = document.getElementById('result').innerText;
+        
+        if (checkbox.checked) {
+            challengeText.innerText = "Boire la fiole";
+        } else {
+            const teamBoard = team === 1 ? team1Board : team2Board;
+            const action = teamBoard[currentCase];
+            challengeText.innerText = action === "vide" ? "Case vide" : action;
+        }
+        
+        challengeText.classList.remove('hidden');
+        document.querySelector(`#revealButton${team}`).classList.add('hidden');
+        checkbox.disabled = true;  // Désactive la case à cocher après la révélation
+    }
+
+    function updateHistory() {
+        const historyElement = document.getElementById('history');
+        historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
+    }
+
+    function updateRemaining() {
+        const remainingElement = document.getElementById('remaining');
+        remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
+    }
+
+    function moveGhost() {
+        const ghost = document.getElementById('ghost');
+        const maxX = window.innerWidth - ghost.offsetWidth;
+        const maxY = window.innerHeight - ghost.offsetHeight;
+
+        function animate() {
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            ghost.style.left = `${newX}px`;
+            ghost.style.top = `${newY}px`;
+            ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            setTimeout(animate, 5000 + Math.random() * 3000);
         }
 
-        function updateRemaining() {
-            const remainingElement = document.getElementById('remaining');
-            remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
+        animate();
+    }
+
+    function checkGhostVisibility() {
+        const ghost = document.getElementById('ghost');
+        const rect = ghost.getBoundingClientRect();
+        const isVisible = (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+
+        if (!isVisible) {
+            ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
+            ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
         }
+    }
 
-        function moveGhost() {
-            const ghost = document.getElementById('ghost');
-            const maxX = window.innerWidth - ghost.offsetWidth;
-            const maxY = window.innerHeight - ghost.offsetHeight;
+    window.onload = function() {
+        initializeBoards();
+        availableCases = Object.keys(team1Board);
+        updateRemaining();
+        moveGhost();
+        setInterval(checkGhostVisibility, 1000);
+    };
 
-            function animate() {
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
-                ghost.style.left = `${newX}px`;
-                ghost.style.top = `${newY}px`;
-                ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-                setTimeout(animate, 5000 + Math.random() * 3000);
-            }
-
-            animate();
-        }
-
-        function checkGhostVisibility() {
-            const ghost = document.getElementById('ghost');
-            const rect = ghost.getBoundingClientRect();
-            const isVisible = (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-
-            if (!isVisible) {
-                ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
-                ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
-            }
-        }
-
-        window.onload = function() {
-            initializeBoards();
-            availableCases = Object.keys(team1Board);
-            updateRemaining();
-            moveGhost();
-            setInterval(checkGhostVisibility, 1000);
-        };
-
-        window.addEventListener('resize', moveGhost);
-    </script>
+    window.addEventListener('resize', moveGhost);
+</script>
 </body>
 </html>
