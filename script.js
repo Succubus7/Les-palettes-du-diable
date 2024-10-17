@@ -18,7 +18,27 @@ const halloweenNames = [
 ];
 
 const allActions = [
-    // ... (gardez vos 50 actions ici)
+    "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
+    "Imite ton animal préféré pendant 30 secondes.",
+    "Raconte une blague en utilisant uniquement des bruits d'animaux.",
+    "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
+    "Chante le refrain de ta chanson préférée en mode opéra.",
+    "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
+    "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
+    "Invente et démontre un nouveau pas de danse ridicule.",
+    "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
+    "Imite trois célébrités différentes en moins d'une minute.",
+    "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
+    "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
+    "Quel est ton plus grand regret ?",
+    "Quelle est la chose la plus folle sur ta bucket list ?",
+    "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
+    "Quel est le mensonge le plus important que tu aies jamais dit ?",
+    "Quelle est la chose la plus étrange que tu aies mangée ?",
+    "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
+    "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
+    "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
+    // Ajoutez ici les 30 actions supplémentaires pour atteindre un total de 50 actions
 ];
 
 let availableActions = [...allActions];
@@ -296,25 +316,31 @@ function fillRandomHalloweenNames() {
     const inputs = document.querySelectorAll('#team1Participants input, #team2Participants input');
     shuffleArray(halloweenNames);
     inputs.forEach((input, index) => {
-        input.value = halloweenNames[index];
-        input.addEventListener('focus', function() {
-            if (halloweenNames.includes(this.value)) {
-                this.value = '';
-            }
-        });
+        if (index < halloweenNames.length) {
+            input.value = halloweenNames[index];
+            input.dataset.original = halloweenNames[index];
+            input.addEventListener('focus', function() {
+                if (this.value === this.dataset.original) {
+                    this.value = '';
+                }
+            });
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.value = this.dataset.original;
+                }
+            });
+        }
     });
 }
-
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
     } else {
         fillRandomHalloweenNames();
-        document.getElementById('teamNameOverlay').style.display = 'flex';
     }
+    document.getElementById('teamNameOverlay').style.display = 'flex';
     moveGhost();
 };
-
 window.addEventListener('resize', moveGhost);
 document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
 document.getElementById('restartGameButton').addEventListener('click', restartGame);
