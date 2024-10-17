@@ -253,15 +253,20 @@ function saveTeamNames() {
     }
 
     document.getElementById('teamNameOverlay').style.display = 'none';
-}
-
-window.onload = function() {
+    
+    // Initialiser le jeu
     initializeBoards();
     availableCases = Object.keys(team1Board);
     updateRemaining();
+    
+    // Générer le premier duel
+    generateDuel();
+}
+
+window.onload = function() {
+    document.getElementById('teamNameOverlay').style.display = 'flex';
     moveGhost();
     setInterval(checkGhostVisibility, 1000);
-    document.getElementById('teamNameOverlay').style.display = 'flex';
 };
 
 window.addEventListener('resize', moveGhost);
