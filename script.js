@@ -89,8 +89,8 @@ function generateDuel() {
     const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
     currentDuel = [team1Player, team2Player];
     
-    const team1Name = document.querySelector('#challenge1 h3').textContent;
-    const team2Name = document.querySelector('#challenge2 h3').textContent;
+    const team1Name = document.querySelector('#challenge1 h2').textContent;
+    const team2Name = document.querySelector('#challenge2 h2').textContent;
     
     const duelAnnouncement = `${team1Player} (${team1Name}) VS ${team2Player} (${team2Name})`;
     document.getElementById('duelAnnouncement').innerText = duelAnnouncement;
@@ -108,7 +108,7 @@ function closeDuelOverlay() {
 function startGeneration() {
     if (isGenerating) return;
     isGenerating = true;
-    document.querySelector('.grim-reaper-container').style.pointerEvents = 'none';
+    document.querySelector('#grim-reaper').style.pointerEvents = 'none';
     document.getElementById('invocationSound').play();
     shuffleDisplay();
 }
@@ -152,7 +152,7 @@ function generateCase() {
     updateRemaining();
 
     isGenerating = false;
-    document.querySelector('.grim-reaper-container').style.pointerEvents = 'none';
+    document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
     document.getElementById('nextDuelButton').classList.remove('hidden');
 }
 
@@ -213,37 +213,54 @@ function moveGhost() {
     function animate() {
         const newX = Math.random() * maxX;
         const newY = Math.random() * maxY;
-        ghost.style.left = `${newX}px`;
-        ghost.style.top = `${newY}px`;
-        ghost.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        ghost.style.transform = `translate(${newX}px, ${newY}px) rotate(${Math.random() * 20 - 10}deg)`;
         setTimeout(animate, 5000 + Math.random() * 3000);
     }
 
     animate();
 }
 
-function checkGhostVisibility() {
-    const ghost = document.getElementById('ghost');
-    const rect = ghost.getBoundingClientRect();
-    const isVisible = (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+function saveGameState() {
+    const gameState = {
+        team1Board,
+        team2Board,
+        team1Participants,
+        team2Participants,
+        availableCases,
+        history,
+        currentCase,
+        currentDuel
+    };
+    localStorage.setItem('tcsGameState', JSON.stringify(gameState));
+}
 
-    if (!isVisible) {
-        ghost.style.left = `${Math.random() * (window.innerWidth - ghost.offsetWidth)}px`;
-        ghost.style.top = `${Math.random() * (window.innerHeight - ghost.offsetHeight)}px`;
+function loadGameState() {
+    const savedState = localStorage.getItem('tcsGameState');
+    if (savedState) {
+        const gameState = JSON.parse(savedState);
+        team1Board = gameState.team1Board;
+        team2Board = gameState.team2Board;
+        team1Participants = gameState.team1Participants;
+        team2Participants = gameState.team2Participants;
+        availableCases = gameState.availableCases;
+        history = gameState.history;
+        currentCase = gameState.currentCase;
+        currentDuel = gameState.currentDuel;
+        return true;
     }
+    return false;
+}
+
+function clearGameState() {
+    localStorage.removeItem('tcsGameState');
 }
 
 function saveTeamNames() {
     const team1Name = document.getElementById('team1Name').value || "Équipe 1";
     const team2Name = document.getElementById('team2Name').value || "Équipe 2";
     
-    document.querySelector('#challenge1 h3').textContent = team1Name;
-    document.querySelector('#challenge2 h3').textContent = team2Name;
+    document.querySelector('#challenge1 h2').textContent = team1Name;
+    document.querySelector('#challenge2 h2').textContent = team2Name;
     
     team1Participants = Array.from(document.querySelectorAll('#team1Participants input')).map(input => input.value).filter(name => name.trim() !== '');
     team2Participants = Array.from(document.querySelectorAll('#team2Participants input')).map(input => input.value).filter(name => name.trim() !== '');
@@ -255,25 +272,48 @@ function saveTeamNames() {
 
     document.getElementById('teamNameOverlay').style.display = 'none';
     
-    // Initialiser le jeu
     initializeBoards();
     availableCases = Object.keys(team1Board);
     updateRemaining();
-    
-    // Générer le premier duel
     generateDuel();
+    saveGameState();
 }
 
 function nextDuel() {
     document.getElementById('nextDuelButton').classList.add('hidden');
     generateDuel();
+    saveGameState();
+}
+
+function restartGame() {
+    if (confirm("Êtes-vous sûr de vouloir recommencer le jeu ? Toute progression sera perdue.")) {
+        clearGameState();
+        location.reload();
+    }
+}
+
+function updateUI() {
+    document.querySelector('#challenge1 h2').textContent = team1Participants[0] ? `Équipe de ${team1Participants[0]}` : "Équipe 1";
+    document.querySelector('#challenge2 h2').textContent = team2Participants[0] ? `Équipe de ${team2Participants[0]}` : "Équipe 2";
+    document.getElementById('result').innerText = currentCase || '-';
+    document.getElementById('currentDuel').innerText = currentDuel.length ? `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}` : '';
+    updateHistory();
+    updateRemaining();
+}
+
+function closeOverlay() {
+    document.getElementById('teamNameOverlay').style.display = 'none';
 }
 
 window.onload = function() {
-    document.getElementById('teamNameOverlay').style.display = 'flex';
+    if (loadGameState()) {
+        updateUI();
+    } else {
+        document.getElementById('teamNameOverlay').style.display = 'flex';
+    }
     moveGhost();
-    setInterval(checkGhostVisibility, 1000);
 };
 
 window.addEventListener('resize', moveGhost);
 document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
+document.getElementById('restartGameButton').addEventListener('click', restartGame);
