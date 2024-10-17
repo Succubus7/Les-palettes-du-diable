@@ -13,10 +13,46 @@ let team2Participants = [];
 let currentDuel = [];
 
 const halloweenNames = [
-    "Dracula", "Frankenstein", "Zombie", "Werewolf", "Ghost", "Witch", "Vampire", "Mummy", "Skeleton", "Phantom",
-    "Banshee", "Goblin", "Ghoul", "Pumpkin", "Bat", "Spider", "Raven", "Black Cat", "Owl", "Troll",
-    "Clown", "Scarecrow", "Demon", "Imp", "Wraith", "Warlock", "Necromancer", "Reaper", "Harpy", "Siren",
-    "Ogre", "Boogeyman", "Poltergeist", "Wendigo", "Changeling", "Minotaur", "Cyclops", "Medusa", "Kraken", "Chimera"
+    "Dracula", // Reste identique en français
+    "Frankenstein", // Reste identique en français
+    "Zombie", // Reste identique en français
+    "Loup-garou",
+    "Fantôme",
+    "Sorcière",
+    "Vampire", // Reste identique en français
+    "Momie",
+    "Squelette",
+    "Spectre",
+    "Banshee", // Souvent non traduit, mais on pourrait dire "Pleureuse"
+    "Gobelin",
+    "Goule",
+    "Citrouille",
+    "Chauve-souris",
+    "Araignée",
+    "Corbeau",
+    "Chat noir",
+    "Hibou",
+    "Troll", // Reste identique en français
+    "Clown", // Reste identique en français
+    "Épouvantail",
+    "Démon",
+    "Lutin maléfique",
+    "Spectre",
+    "Sorcier",
+    "Nécromancien",
+    "Faucheuse",
+    "Harpie",
+    "Sirène",
+    "Ogre", // Reste identique en français
+    "Croque-mitaine",
+    "Poltergeist", // Souvent non traduit, mais on pourrait dire "Esprit frappeur"
+    "Wendigo", // Généralement non traduit
+    "Changelin",
+    "Minotaure",
+    "Cyclope",
+    "Méduse",
+    "Kraken", // Reste identique en français
+    "Chimère"
 ];
 
 const allActions = [
