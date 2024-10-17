@@ -18,27 +18,7 @@ const halloweenNames = [
 ];
 
 const allActions = [
-    "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
-    "Imite ton animal préféré pendant 30 secondes.",
-    "Raconte une blague en utilisant uniquement des bruits d'animaux.",
-    "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
-    "Chante le refrain de ta chanson préférée en mode opéra.",
-    "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
-    "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
-    "Invente et démontre un nouveau pas de danse ridicule.",
-    "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
-    "Imite trois célébrités différentes en moins d'une minute.",
-    "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
-    "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
-    "Quel est ton plus grand regret ?",
-    "Quelle est la chose la plus folle sur ta bucket list ?",
-    "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
-    "Quel est le mensonge le plus important que tu aies jamais dit ?",
-    "Quelle est la chose la plus étrange que tu aies mangée ?",
-    "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
-    "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
-    "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
-    // Ajoutez ici 30 actions supplémentaires pour atteindre un total de 50 actions
+    // ... (gardez vos 50 actions ici)
 ];
 
 let availableActions = [...allActions];
@@ -64,7 +44,7 @@ function initializeBoards() {
     );
 
     shuffleArray(allCases);
-    availableCases = [...allCases]; // Initialise availableCases avec toutes les cases
+    availableCases = [...allCases]; // Réinitialise availableCases avec toutes les cases
 
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
@@ -89,11 +69,7 @@ function initializeBoards() {
         }
     });
 }
-function startNewGame() {
-    initializeBoards();
-    updateRemaining();
-    // Autres initialisations nécessaires...
-}
+
 function generateDuel() {
     const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
     const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
@@ -112,7 +88,6 @@ function closeDuelOverlay() {
     document.getElementById('duelOverlay').style.display = 'none';
     document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
     document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
-    document.getElementById('result').innerText = currentCase || '-';
 }
 
 function startGeneration() {
@@ -252,13 +227,17 @@ function loadGameState() {
         Object.assign(team2Board, gameState.team2Board);
         team1Participants = gameState.team1Participants;
         team2Participants = gameState.team2Participants;
-        availableCases = gameState.availableCases; // Assurez-vous que ceci est présent
+        availableCases = gameState.availableCases;
         history = gameState.history;
         currentCase = gameState.currentCase;
         currentDuel = gameState.currentDuel;
         return true;
     }
     return false;
+}
+
+function clearGameState() {
+    localStorage.removeItem('tcsGameState');
 }
 
 function saveTeamNames() {
@@ -276,13 +255,12 @@ function saveTeamNames() {
         return;
     }
 
-    document.getElementById('teamNameOverlay').style.display = 'none';
-    
-    if (!hasGameStarted()) {
-        startNewGame();
-        generateDuel();
-    }
+    initializeBoards();
+    updateRemaining();
+    generateDuel();
     saveGameState();
+    
+    document.getElementById('teamNameOverlay').style.display = 'none';
 }
 
 function nextDuel() {
@@ -307,17 +285,11 @@ function updateUI() {
     }
     updateHistory();
     updateRemaining();
-    if (hasGameStarted()) {
-        document.getElementById('nextDuelButton').classList.remove('hidden');
-    }
 }
 
 function closeOverlay() {
-    document.getElementById('teamNameOverlay').style.display = 'none';
-}
-
-function hasGameStarted() {
-    return team1Participants.length > 0 && team2Participants.length > 0;
+    // Ne fermez pas l'overlay automatiquement, laissez l'utilisateur remplir les informations
+    // document.getElementById('teamNameOverlay').style.display = 'none';
 }
 
 function fillRandomHalloweenNames() {
@@ -336,7 +308,6 @@ function fillRandomHalloweenNames() {
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
-        document.getElementById('teamNameOverlay').style.display = 'none';
     } else {
         fillRandomHalloweenNames();
         document.getElementById('teamNameOverlay').style.display = 'flex';
