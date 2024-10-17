@@ -14,7 +14,9 @@ let currentDuel = [];
 
 const halloweenNames = [
     "Dracula", "Frankenstein", "Zombie", "Werewolf", "Ghost", "Witch", "Vampire", "Mummy", "Skeleton", "Phantom",
-    "Banshee", "Goblin", "Ghoul", "Pumpkin", "Bat", "Spider", "Raven", "Black Cat", "Owl", "Troll"
+    "Banshee", "Goblin", "Ghoul", "Pumpkin", "Bat", "Spider", "Raven", "Black Cat", "Owl", "Troll",
+    "Clown", "Scarecrow", "Demon", "Imp", "Wraith", "Warlock", "Necromancer", "Reaper", "Harpy", "Siren",
+    "Ogre", "Boogeyman", "Poltergeist", "Wendigo", "Changeling", "Minotaur", "Cyclops", "Medusa", "Kraken", "Chimera"
 ];
 
 const allActions = [
