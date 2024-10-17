@@ -238,8 +238,8 @@ function loadGameState() {
     const savedState = localStorage.getItem('tcsGameState');
     if (savedState) {
         const gameState = JSON.parse(savedState);
-        team1Board = gameState.team1Board;
-        team2Board = gameState.team2Board;
+        Object.assign(team1Board, gameState.team1Board);
+        Object.assign(team2Board, gameState.team2Board);
         team1Participants = gameState.team1Participants;
         team2Participants = gameState.team2Participants;
         availableCases = gameState.availableCases;
@@ -272,10 +272,12 @@ function saveTeamNames() {
 
     document.getElementById('teamNameOverlay').style.display = 'none';
     
-    initializeBoards();
-    availableCases = Object.keys(team1Board);
-    updateRemaining();
-    generateDuel();
+    if (!hasGameStarted()) {
+        initializeBoards();
+        availableCases = Object.keys(team1Board);
+        updateRemaining();
+        generateDuel();
+    }
     saveGameState();
 }
 
@@ -296,9 +298,14 @@ function updateUI() {
     document.querySelector('#challenge1 h2').textContent = team1Participants[0] ? `Équipe de ${team1Participants[0]}` : "Équipe 1";
     document.querySelector('#challenge2 h2').textContent = team2Participants[0] ? `Équipe de ${team2Participants[0]}` : "Équipe 2";
     document.getElementById('result').innerText = currentCase || '-';
-    document.getElementById('currentDuel').innerText = currentDuel.length ? `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}` : '';
+    if (currentDuel.length) {
+        document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
+    }
     updateHistory();
     updateRemaining();
+    if (hasGameStarted()) {
+        document.getElementById('nextDuelButton').classList.remove('hidden');
+    }
 }
 
 function closeOverlay() {
@@ -308,6 +315,7 @@ function closeOverlay() {
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
+        document.getElementById('teamNameOverlay').style.display = 'none';
     } else {
         document.getElementById('teamNameOverlay').style.display = 'flex';
     }
@@ -317,3 +325,7 @@ window.onload = function() {
 window.addEventListener('resize', moveGhost);
 document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
 document.getElementById('restartGameButton').addEventListener('click', restartGame);
+
+function hasGameStarted() {
+    return team1Participants.length > 0 && team2Participants.length > 0;
+}
