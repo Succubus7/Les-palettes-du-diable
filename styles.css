@@ -158,27 +158,29 @@ h1 {
 
 .overlay-content {
     background-color: var(--bg-color);
-    padding: 60px;
+    padding: 30px;
     border-radius: 20px;
     border: 4px solid var(--primary-color);
-    max-width: 800px;
+    max-width: 600px; /* Réduit de 800px à 600px */
     width: 90%;
     position: relative;
+    max-height: 80vh; /* Limite la hauteur à 80% de la hauteur de la fenêtre */
+    overflow-y: auto; /* Permet le défilement si le contenu est trop long */
 }
 
 .overlay-content h2 {
-    font-size: 3rem;
-    margin-bottom: 30px;
+    font-size: 2rem; /* Réduit de 3rem à 2rem */
+    margin-bottom: 20px;
 }
 
 .overlay-content input[type="text"] {
     width: 100%;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 10px; /* Réduit de 15px à 10px */
+    margin: 5px 0; /* Réduit de 10px à 5px */
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid var(--primary-color);
     color: var(--text-color);
-    font-size: 1.2rem;
+    font-size: 1rem; /* Réduit de 1.2rem à 1rem */
 }
 
 .overlay-content input[type="text"]:focus {
