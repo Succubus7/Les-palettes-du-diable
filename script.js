@@ -20,30 +20,80 @@ const halloweenNames = [
 ];
 
 const allActions = [
-    "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
-    "Imite ton animal préféré pendant 30 secondes.",
-    "Raconte une blague en utilisant uniquement des bruits d'animaux.",
-    "Fais semblant d'être un commentateur sportif et commente les actions des autres joueurs pendant 1 minute.",
-    "Chante le refrain de ta chanson préférée en mode opéra.",
-    "Fais une déclaration d'amour passionnée à un objet dans la pièce.",
-    "Mime une scène célèbre d'un film sans parler, les autres doivent deviner.",
-    "Invente et démontre un nouveau pas de danse ridicule.",
-    "Fais un discours de remerciement comme si tu venais de gagner un Oscar pour le rôle le plus improbable.",
-    "Imite trois célébrités différentes en moins d'une minute.",
-    "Quelle est la chose la plus embarrassante que tu aies faite en public ?",
-    "Si tu pouvais échanger ta vie avec quelqu'un dans cette pièce pendant une journée, qui choisirais-tu et pourquoi ?",
-    "Quel est ton plus grand regret ?",
-    "Quelle est la chose la plus folle sur ta bucket list ?",
-    "Si tu devais avoir un tatouage, que serait-ce et où le placerais-tu ?",
-    "Quel est le mensonge le plus important que tu aies jamais dit ?",
-    "Quelle est la chose la plus étrange que tu aies mangée ?",
-    "Si tu pouvais effacer un souvenir de ta mémoire, lequel serait-ce ?",
-    "Quelle est la chose la plus chère que tu aies volée ou que tu aurais voulu voler ?",
-    "Si tu devais être enfermé dans un magasin pour une nuit, lequel choisirais-tu ?",
-    // Ajoutez ici les 30 actions supplémentaires pour atteindre un total de 50 actions
+    "{player} doit faire un compliment sincère à {randomPlayer}.",
+    "{player} doit imiter {randomPlayer} pendant 30 secondes, et les autres doivent deviner qui est imité.",
+    "{player} et {randomPlayer} doivent improviser une scène de film romantique ensemble.",
+    "{player} doit porter {randomPlayer} sur son dos et faire un tour de la pièce.",
+    "{player} doit raconter une histoire effrayante en incluant tous les autres joueurs comme personnages.",
+    "{player} doit faire deviner un mot à {randomPlayer} sans parler, seulement en dessinant dans l'air.",
+    "{player} et {randomPlayer} doivent faire un concours de grimaces, les autres votent pour le gagnant.",
+    "{player} doit créer un chapeau original pour {randomPlayer} en utilisant uniquement des objets dans la pièce.",
+    "{player} doit inventer et enseigner une danse ridicule à {randomPlayer}.",
+    "{player} doit faire un massage des épaules de 30 secondes à {randomPlayer}.",
+    "{player} doit lire les lignes de la main de {randomPlayer} et prédire son avenir de façon humoristique.",
+    "{player} et {randomPlayer} doivent jouer à pierre-papier-ciseaux, le perdant doit faire 10 pompes.",
+    "{player} doit chuchoter un secret (réel ou inventé) à l'oreille de {randomPlayer}.",
+    "{player} doit faire un portrait rapide de {randomPlayer} et l'afficher pour tous.",
+    "{player} doit inventer un jingle publicitaire pour un produit choisi par {randomPlayer}.",
+    "{player} et {randomPlayer} doivent faire un concours de regard fixe, le premier qui rit perd.",
+    "{player} doit faire un discours de 1 minute sur pourquoi {randomPlayer} devrait être président.",
+    "{player} doit créer un cocktail non alcoolisé avec des ingrédients choisis par {randomPlayer}.",
+    "{player} doit essayer de faire rire {randomPlayer} sans parler ni le toucher.",
+    "{player} doit mimer une scène de film célèbre avec {randomPlayer}, les autres devinent.",
+    "{player} doit inventer une histoire courte où {randomPlayer} est le héros.",
+    "{player} et {randomPlayer} doivent faire un duel de compliments pendant 1 minute.",
+    "{player} doit faire un tour de magie improvisé avec l'aide de {randomPlayer}.",
+    "{player} doit créer une coiffure originale pour {randomPlayer} en 2 minutes.",
+    "{player} doit inventer un nouveau sport et en expliquer les règles à {randomPlayer}.",
+    "{player} et {randomPlayer} doivent échanger leurs chaussures pour les 3 prochains tours.",
+    "{player} doit mimer un animal choisi par {randomPlayer}, les autres devinent.",
+    "{player} doit inventer une chanson de rap sur {randomPlayer} et la performer.",
+    "{player} doit faire un discours de mariage improvisé pour {randomPlayer}.",
+    "{player} et {randomPlayer} doivent créer une chorégraphie de 30 secondes ensemble.",
+    "{player} doit donner 3 surnoms originaux à {randomPlayer}, qui choisit son préféré.",
+    "{player} doit faire un compliment à chaque joueur, mais en commençant par {randomPlayer}.",
+    "{player} doit mimer une journée typique dans la vie de {randomPlayer}.",
+    "{player} et {randomPlayer} doivent jouer à 'Je n'ai jamais' pendant 2 minutes.",
+    "{player} doit inventer une histoire courte en utilisant 5 mots choisis par {randomPlayer}.",
+    "{player} doit faire une imitation de célébrité choisie par {randomPlayer}.",
+    "{player} doit inventer un nouveau plat culinaire et le 'préparer' avec {randomPlayer} comme assistant.",
+    "{player} et {randomPlayer} doivent faire un concours de qui peut tenir le plus longtemps sur un pied.",
+    "{player} doit décrire {randomPlayer} comme s'il était un personnage de roman fantastique.",
+    "{player} doit inventer une nouvelle danse de fête avec {randomPlayer} comme partenaire.",
+    "{player} doit faire un portrait chinois de {randomPlayer} (Si tu étais un animal, une couleur, etc.).",
+    "{player} et {randomPlayer} doivent jouer à Twister imaginaire pendant 1 minute.",
+    "{player} doit inventer une publicité pour vendre un objet choisi par {randomPlayer}.",
+    "{player} doit raconter une blague à {randomPlayer}, qui doit la répéter de mémoire.",
+    "{player} et {randomPlayer} doivent faire un concours du meilleur accent étranger.",
+    "{player} doit faire deviner un film à {randomPlayer} en n'utilisant que des sons.",
+    "{player} doit créer un personnage de super-héros basé sur {randomPlayer}.",
+    "{player} doit mimer une scène de film d'horreur avec {randomPlayer} comme victime.",
+    "{player} et {randomPlayer} doivent inventer et performer un nouveau rituel de salutation.",
+    "{player} doit faire un discours d'investiture présidentielle en incluant 3 mots choisis par {randomPlayer}."
 ];
 
 let availableActions = [...allActions];
+
+function getUniqueAction(currentPlayer) {
+    if (availableActions.length === 0) {
+        availableActions = [...allActions];
+        shuffleArray(availableActions);
+    }
+    let action = availableActions.pop();
+    
+    // Remplacer {player} par le nom du joueur actuel
+    action = action.replace("{player}", currentPlayer);
+    
+    // Choisir un joueur aléatoire différent du joueur actuel
+    let allPlayers = [...team1Participants, ...team2Participants];
+    let otherPlayers = allPlayers.filter(player => player !== currentPlayer);
+    let randomPlayer = otherPlayers[Math.floor(Math.random() * otherPlayers.length)];
+    
+    // Remplacer {randomPlayer} par le nom du joueur aléatoire
+    action = action.replace("{randomPlayer}", randomPlayer);
+    
+    return action;
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -66,7 +116,7 @@ function initializeBoards() {
     );
 
     shuffleArray(allCases);
-    availableCases = [...allCases]; // Réinitialise availableCases avec toutes les cases
+    availableCases = [...allCases];
 
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
@@ -75,8 +125,10 @@ function initializeBoards() {
             team1Board[currentCase] = "vide";
             team2Board[currentCase] = "vide";
         } else {
-            team1Board[currentCase] = getUniqueAction();
-            team2Board[currentCase] = getUniqueAction();
+            const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
+            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
+            team1Board[currentCase] = getUniqueAction(team1Player);
+            team2Board[currentCase] = getUniqueAction(team2Player);
         }
     }
 
@@ -87,7 +139,8 @@ function initializeBoards() {
         if (i < 15) {
             team2Board[c] = "vide";
         } else {
-            team2Board[c] = getUniqueAction();
+            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
+            team2Board[c] = getUniqueAction(team2Player);
         }
     });
 }
