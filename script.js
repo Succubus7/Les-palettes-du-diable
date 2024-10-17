@@ -12,6 +12,11 @@ let team1Participants = [];
 let team2Participants = [];
 let currentDuel = [];
 
+const halloweenNames = [
+    "Dracula", "Frankenstein", "Zombie", "Werewolf", "Ghost", "Witch", "Vampire", "Mummy", "Skeleton", "Phantom",
+    "Banshee", "Goblin", "Ghoul", "Pumpkin", "Bat", "Spider", "Raven", "Black Cat", "Owl", "Troll"
+];
+
 const allActions = [
     "Fais un défilé de mode exagéré en utilisant un objet de la pièce comme accessoire principal.",
     "Imite ton animal préféré pendant 30 secondes.",
@@ -59,6 +64,7 @@ function initializeBoards() {
     );
 
     shuffleArray(allCases);
+    availableCases = [...allCases];
 
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
@@ -100,7 +106,7 @@ function generateDuel() {
 
 function closeDuelOverlay() {
     document.getElementById('duelOverlay').style.display = 'none';
-    document.querySelector('.grim-reaper-container').style.pointerEvents = 'auto';
+    document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
     document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
     document.getElementById('result').innerText = currentCase || '-';
 }
@@ -274,7 +280,6 @@ function saveTeamNames() {
     
     if (!hasGameStarted()) {
         initializeBoards();
-        availableCases = Object.keys(team1Board);
         updateRemaining();
         generateDuel();
     }
@@ -312,11 +317,29 @@ function closeOverlay() {
     document.getElementById('teamNameOverlay').style.display = 'none';
 }
 
+function hasGameStarted() {
+    return team1Participants.length > 0 && team2Participants.length > 0;
+}
+
+function fillRandomHalloweenNames() {
+    const inputs = document.querySelectorAll('#team1Participants input, #team2Participants input');
+    shuffleArray(halloweenNames);
+    inputs.forEach((input, index) => {
+        input.value = halloweenNames[index];
+        input.addEventListener('focus', function() {
+            if (halloweenNames.includes(this.value)) {
+                this.value = '';
+            }
+        });
+    });
+}
+
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
         document.getElementById('teamNameOverlay').style.display = 'none';
     } else {
+        fillRandomHalloweenNames();
         document.getElementById('teamNameOverlay').style.display = 'flex';
     }
     moveGhost();
@@ -325,7 +348,3 @@ window.onload = function() {
 window.addEventListener('resize', moveGhost);
 document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
 document.getElementById('restartGameButton').addEventListener('click', restartGame);
-
-function hasGameStarted() {
-    return team1Participants.length > 0 && team2Participants.length > 0;
-}
