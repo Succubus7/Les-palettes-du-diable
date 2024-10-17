@@ -11,7 +11,8 @@
     <div class="halloween-bg"></div>
     <div class="container">
         <h1>LES PALETTES DU DIABLE</h1>
-        <div class="teams-container">
+        <div id="currentDuel" class="current-duel"></div>
+        <div class="game-area">
             <div class="team" id="challenge1">
                 <h2>Équipe 1</h2>
                 <p class="hidden"></p>
@@ -19,6 +20,14 @@
                     <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
                     <label for="potionCheckbox1" class="potion-label">Fiole</label>
                     <button onclick="revealChallenge(1)" class="btn" id="revealButton1">Découvrir</button>
+                </div>
+            </div>
+            <div class="center-content">
+                <div id="result">-</div>
+                <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper" class="floating" onclick="startGeneration()">
+                <div class="action-buttons">
+                    <button id="nextDuelButton" class="btn hidden">Duel Suivant</button>
+                    <button id="restartGameButton" class="btn">Recommencer le jeu</button>
                 </div>
             </div>
             <div class="team" id="challenge2">
@@ -29,14 +38,6 @@
                     <label for="potionCheckbox2" class="potion-label">Fiole</label>
                     <button onclick="revealChallenge(2)" class="btn" id="revealButton2">Découvrir</button>
                 </div>
-            </div>
-        </div>
-        <div class="action-area">
-            <div id="result">-</div>
-            <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper" class="floating" onclick="startGeneration()">
-            <div>
-                <button id="nextDuelButton" class="btn hidden">Duel Suivant</button>
-                <button id="restartGameButton" class="btn">Recommencer le jeu</button>
             </div>
         </div>
         <div id="history"></div>
@@ -53,7 +54,6 @@
             <h2>Configuration des équipes</h2>
             <div>
                 <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
-                   <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
                 <div id="team1Participants">
                     <h3>Participants de l'Équipe 1</h3>
                     <input type="text" placeholder="Participant 1">
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div>
-        
+                <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
                 <div id="team2Participants">
                     <h3>Participants de l'Équipe 2</h3>
                     <input type="text" placeholder="Participant 1">
