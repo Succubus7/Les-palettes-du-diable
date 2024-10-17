@@ -335,10 +335,11 @@ function fillRandomHalloweenNames() {
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
+        document.getElementById('teamNameOverlay').style.display = 'none';
     } else {
         fillRandomHalloweenNames();
+        document.getElementById('teamNameOverlay').style.display = 'flex';
     }
-    document.getElementById('teamNameOverlay').style.display = 'flex';
     moveGhost();
 };
 window.addEventListener('resize', moveGhost);
