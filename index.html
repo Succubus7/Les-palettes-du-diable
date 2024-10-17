@@ -48,15 +48,14 @@
         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z' fill='white'/><circle cx='35' cy='40' r='5' fill='black'/><circle cx='65' cy='40' r='5' fill='black'/></svg>" alt="Ghost">
     </div>
 
-    <div id="teamNameOverlay" class="overlay">
-        <div class="overlay-content">
-            <button class="close-btn" onclick="closeOverlay()">&times;</button>
-            <h2>Configuration des équipes</h2>
-            <div>
+<div id="teamNameOverlay" class="overlay">
+    <div class="overlay-content">
+        <button class="close-btn" onclick="closeOverlay()">&times;</button>
+        <h2>Configuration des équipes</h2>
+        <div class="teams-setup">
+            <div class="team-setup">
                 <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
-                               <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
-                <div id="team1Participants">
-                    <h3>Participants de l'Équipe 1</h3>
+                <div id="team1Participants" class="participants">
                     <input type="text" placeholder="Participant 1">
                     <input type="text" placeholder="Participant 2">
                     <input type="text" placeholder="Participant 3">
@@ -65,10 +64,9 @@
                     <input type="text" placeholder="Participant 6">
                 </div>
             </div>
-            <div>
-
-                <div id="team2Participants">
-                    <h3>Participants de l'Équipe 2</h3>
+            <div class="team-setup">
+                <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
+                <div id="team2Participants" class="participants">
                     <input type="text" placeholder="Participant 1">
                     <input type="text" placeholder="Participant 2">
                     <input type="text" placeholder="Participant 3">
@@ -77,9 +75,10 @@
                     <input type="text" placeholder="Participant 6">
                 </div>
             </div>
-            <button onclick="saveTeamNames()" class="btn">Commencer le jeu</button>
         </div>
+        <button onclick="saveTeamNames()" class="btn">Commencer le jeu</button>
     </div>
+</div>
 
     <div id="duelOverlay" class="overlay" style="display: none;">
         <div class="overlay-content">
