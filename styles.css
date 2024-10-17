@@ -158,46 +158,80 @@ h1 {
 
 .overlay-content {
     background-color: var(--bg-color);
-    padding: 30px;
+    padding: 40px;
     border-radius: 20px;
     border: 4px solid var(--primary-color);
-    max-width: 600px; /* Réduit de 800px à 600px */
     width: 90%;
+    max-width: 1600px;
     position: relative;
-    max-height: 80vh; /* Limite la hauteur à 80% de la hauteur de la fenêtre */
-    overflow-y: auto; /* Permet le défilement si le contenu est trop long */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .overlay-content h2 {
-    font-size: 2rem; /* Réduit de 3rem à 2rem */
-    margin-bottom: 20px;
+    font-size: 3rem;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.overlay-content input[type="text"] {
+.teams-setup {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.team-setup {
+    flex: 1;
+}
+
+.team-setup input[type="text"] {
     width: 100%;
-    padding: 10px; /* Réduit de 15px à 10px */
-    margin: 5px 0; /* Réduit de 10px à 5px */
+    padding: 15px;
+    margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid var(--primary-color);
     color: var(--text-color);
-    font-size: 1rem; /* Réduit de 1.2rem à 1rem */
+    font-size: 1.2rem;
 }
 
-.overlay-content input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0 0 10px var(--primary-color);
+.participants {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.participants input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    font-size: 1rem;
 }
 
 .close-btn {
     position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 3rem;
+    font-size: 2rem;
     background: none;
     border: none;
     color: var(--primary-color);
     cursor: pointer;
     transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--secondary-color);
+}
+
+.btn {
+    display: block;
+    width: 300px;
+    margin: 30px auto 0;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .close-btn:hover {
