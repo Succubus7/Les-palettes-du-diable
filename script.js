@@ -3,6 +3,7 @@ const numbers = Array.from({length: 20}, (_, i) => i + 1);
 let availableCases = [];
 let history = [];
 let isGenerating = false;
+let currentCase = null;
 
 const team1Board = {};
 const team2Board = {};
@@ -101,6 +102,7 @@ function closeDuelOverlay() {
     document.getElementById('duelOverlay').style.display = 'none';
     document.querySelector('.grim-reaper-container').style.pointerEvents = 'auto';
     document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
+    document.getElementById('result').innerText = currentCase || '-';
 }
 
 function startGeneration() {
@@ -138,10 +140,10 @@ function generateCase() {
     }
 
     const randomIndex = Math.floor(Math.random() * availableCases.length);
-    const newCase = availableCases.splice(randomIndex, 1)[0];
+    currentCase = availableCases.splice(randomIndex, 1)[0];
     
-    document.getElementById('result').innerText = newCase;
-    history.unshift(newCase);
+    document.getElementById('result').innerText = currentCase;
+    history.unshift(currentCase);
     if (history.length > 5) history.pop();
     
     showRevealButtons();
@@ -151,7 +153,7 @@ function generateCase() {
 
     isGenerating = false;
     document.querySelector('.grim-reaper-container').style.pointerEvents = 'none';
-    setTimeout(generateDuel, 1000);
+    document.getElementById('nextDuelButton').classList.remove('hidden');
 }
 
 function showRevealButtons() {
@@ -179,7 +181,6 @@ function resetPotionCheckboxes() {
 function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
-    const currentCase = document.getElementById('result').innerText;
     
     if (checkbox.checked) {
         challengeText.innerText = "Boire la fiole";
@@ -263,6 +264,11 @@ function saveTeamNames() {
     generateDuel();
 }
 
+function nextDuel() {
+    document.getElementById('nextDuelButton').classList.add('hidden');
+    generateDuel();
+}
+
 window.onload = function() {
     document.getElementById('teamNameOverlay').style.display = 'flex';
     moveGhost();
@@ -270,3 +276,4 @@ window.onload = function() {
 };
 
 window.addEventListener('resize', moveGhost);
+document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
