@@ -3,58 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LES PALETTES DU DIABLE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>LES PALETTES DU DIABLE - Halloween Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="ghost"></div>
+    <div class="halloween-bg"></div>
     <div class="container">
         <h1>LES PALETTES DU DIABLE</h1>
-        <div id="result">-</div>
-        <div id="currentDuel"></div>
         <div class="teams-container">
             <div class="team" id="challenge1">
-                <h3>Équipe 1</h3>
+                <h2>Équipe 1</h2>
                 <p class="hidden"></p>
                 <div>
                     <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
                     <label for="potionCheckbox1" class="potion-label">Fiole</label>
-                    <button onclick="revealChallenge(1)" class="reveal-button" id="revealButton1">Découvrir</button>
+                    <button onclick="revealChallenge(1)" class="btn" id="revealButton1">Découvrir</button>
                 </div>
             </div>
-            <div class="grim-reaper-container" onclick="startGeneration()">
-                <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper">
-                <div class="grim-reaper-text">Invoquer une case</div>
-                <button id="nextDuelButton" class="hidden">Duel Suivant</button>
-            </div>
             <div class="team" id="challenge2">
-                <h3>Équipe 2</h3>
+                <h2>Équipe 2</h2>
                 <p class="hidden"></p>
                 <div>
                     <input type="checkbox" id="potionCheckbox2" class="potion-checkbox">
                     <label for="potionCheckbox2" class="potion-label">Fiole</label>
-                    <button onclick="revealChallenge(2)" class="reveal-button" id="revealButton2">Découvrir</button>
+                    <button onclick="revealChallenge(2)" class="btn" id="revealButton2">Découvrir</button>
                 </div>
             </div>
         </div>
-            <div id="duelOverlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <h2>Nouveau Duel</h2>
-            <p id="duelAnnouncement"></p>
-            <button onclick="closeDuelOverlay()">Commencer le duel</button>
+        <div class="action-area">
+            <div id="result">-</div>
+            <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper" class="floating" onclick="startGeneration()">
+            <div>
+                <button id="nextDuelButton" class="btn hidden">Duel Suivant</button>
+                <button id="restartGameButton" class="btn">Recommencer le jeu</button>
+            </div>
         </div>
-    </div>
         <div id="history"></div>
         <div id="remaining"></div>
-        
+    </div>
+
+    <div id="ghost">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z' fill='white'/><circle cx='35' cy='40' r='5' fill='black'/><circle cx='65' cy='40' r='5' fill='black'/></svg>" alt="Ghost">
     </div>
 
     <div id="teamNameOverlay" class="overlay">
         <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay()">&times;</button>
             <h2>Configuration des équipes</h2>
             <div>
                 <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
+                   <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
                 <div id="team1Participants">
                     <h3>Participants de l'Équipe 1</h3>
                     <input type="text" placeholder="Participant 1">
@@ -66,7 +65,7 @@
                 </div>
             </div>
             <div>
-                <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
+        
                 <div id="team2Participants">
                     <h3>Participants de l'Équipe 2</h3>
                     <input type="text" placeholder="Participant 1">
@@ -77,11 +76,17 @@
                     <input type="text" placeholder="Participant 6">
                 </div>
             </div>
-            <button onclick="saveTeamNames()">Commencer le jeu</button>
+            <button onclick="saveTeamNames()" class="btn">Commencer le jeu</button>
         </div>
     </div>
 
-
+    <div id="duelOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h2>Nouveau Duel</h2>
+            <p id="duelAnnouncement"></p>
+            <button onclick="closeDuelOverlay()" class="btn">Commencer le duel</button>
+        </div>
+    </div>
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
 
