@@ -38,8 +38,16 @@
                 </div>
             </div>
         </div>
+            <div id="duelOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h2>Nouveau Duel</h2>
+            <p id="duelAnnouncement"></p>
+            <button onclick="closeDuelOverlay()">Commencer le duel</button>
+        </div>
+    </div>
         <div id="history"></div>
         <div id="remaining"></div>
+        
     </div>
 
     <div id="teamNameOverlay" class="overlay">
@@ -73,13 +81,7 @@
         </div>
     </div>
 
-    <div id="duelOverlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <h2>Nouveau Duel</h2>
-            <p id="duelAnnouncement"></p>
-            <button onclick="closeDuelOverlay()">Commencer le duel</button>
-        </div>
-    </div>
+
 
     <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
 
