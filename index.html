@@ -1,95 +1,243 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LES PALETTES DU DIABLE - Halloween Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="halloween-bg"></div>
-    <div class="container">
-        <h1>LES PALETTES DU DIABLE</h1>
-        <div id="currentDuel" class="current-duel"></div>
-        <div class="game-area">
-            <div class="team" id="challenge1">
-                <h2>Équipe 1</h2>
-                <p class="hidden"></p>
-                <div>
-                    <input type="checkbox" id="potionCheckbox1" class="potion-checkbox">
-                    <label for="potionCheckbox1" class="potion-label">Fiole</label>
-                    <button onclick="revealChallenge(1)" class="btn" id="revealButton1">Découvrir</button>
-                </div>
-            </div>
-            <div class="center-content">
-                <div id="result">-</div>
-                <img id="grim-reaper" src="https://image.noelshack.com/fichiers/2024/42/3/1729102697-2o67-trz2-230518-removebg-preview.png" alt="Grim Reaper" class="floating" onclick="startGeneration()">
-                <div class="action-buttons">
-                    <button id="nextDuelButton" class="btn hidden">Duel Suivant</button>
-                    <button id="restartGameButton" class="btn">Recommencer le jeu</button>
-                </div>
-            </div>
-            <div class="team" id="challenge2">
-                <h2>Équipe 2</h2>
-                <p class="hidden"></p>
-                <div>
-                    <input type="checkbox" id="potionCheckbox2" class="potion-checkbox">
-                    <label for="potionCheckbox2" class="potion-label">Fiole</label>
-                    <button onclick="revealChallenge(2)" class="btn" id="revealButton2">Découvrir</button>
-                </div>
-            </div>
-        </div>
-        <div id="history"></div>
-        <div id="remaining"></div>
-    </div>
+:root {
+    --primary-color: #ff6600;
+    --secondary-color: #8b00ff;
+    --bg-color: #1a0000;
+    --text-color: #ffffff;
+}
 
-    <div id="ghost">
-        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10 C25 10 10 30 10 50 L10 90 L30 70 L40 90 L50 70 L60 90 L70 70 L90 90 L90 50 C90 30 75 10 50 10 Z' fill='white'/><circle cx='35' cy='40' r='5' fill='black'/><circle cx='65' cy='40' r='5' fill='black'/></svg>" alt="Ghost">
-    </div>
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    font-size: 24px;
+}
 
-    <div id="teamNameOverlay" class="overlay">
-        <div class="overlay-content">
-            <button class="close-btn" onclick="closeOverlay()">&times;</button>
-            <h2>Configuration des équipes</h2>
-            <div>
-                <input type="text" id="team1Name" placeholder="Nom de l'Équipe 1">
-                <div id="team1Participants">
-                    <h3>Participants de l'Équipe 1</h3>
-                    <input type="text" placeholder="Participant 1">
-                    <input type="text" placeholder="Participant 2">
-                    <input type="text" placeholder="Participant 3">
-                    <input type="text" placeholder="Participant 4">
-                    <input type="text" placeholder="Participant 5">
-                    <input type="text" placeholder="Participant 6">
-                </div>
-            </div>
-            <div>
-                <input type="text" id="team2Name" placeholder="Nom de l'Équipe 2">
-                <div id="team2Participants">
-                    <h3>Participants de l'Équipe 2</h3>
-                    <input type="text" placeholder="Participant 1">
-                    <input type="text" placeholder="Participant 2">
-                    <input type="text" placeholder="Participant 3">
-                    <input type="text" placeholder="Participant 4">
-                    <input type="text" placeholder="Participant 5">
-                    <input type="text" placeholder="Participant 6">
-                </div>
-            </div>
-            <button onclick="saveTeamNames()" class="btn">Commencer le jeu</button>
-        </div>
-    </div>
+.halloween-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://cdn.midjourney.com/f7580c53-3713-4d0b-807b-2a4e7e251199/0_1.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: -1;
+}
 
-    <div id="duelOverlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <h2>Nouveau Duel</h2>
-            <p id="duelAnnouncement"></p>
-            <button onclick="closeDuelOverlay()" class="btn">Commencer le duel</button>
-        </div>
-    </div>
+.container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 40px;
+}
 
-    <audio id="invocationSound" src="https://lasonotheque.org/UPLOAD/mp3/2046.mp3"></audio>
+h1 {
+    font-family: 'Nosifer', cursive;
+    font-size: 6rem;
+    text-align: center;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color);
+    animation: glow 2s ease-in-out infinite;
+    margin-bottom: 40px;
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+@keyframes glow {
+    0%, 100% { text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color); }
+    50% { text-shadow: 0 0 40px var(--secondary-color), 0 0 60px var(--secondary-color); }
+}
+
+.game-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.team {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 4px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 40px;
+    width: 30%;
+    box-shadow: 0 0 30px var(--primary-color);
+}
+
+.team h2 {
+    font-family: 'Creepster', cursive;
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+}
+
+#result {
+    font-size: 5rem;
+    font-weight: bold;
+    margin: 40px 0;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+#grim-reaper {
+    width: 400px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#grim-reaper:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.hidden {
+    display: none;
+}
+
+#ghost {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 1000;
+    transition: all 0.5s ease;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.overlay-content {
+    background-color: var(--bg-color);
+    padding: 60px;
+    border-radius: 20px;
+    border: 4px solid var(--primary-color);
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+}
+
+.overlay-content h2 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.overlay-content input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.overlay-content input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 3rem;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--secondary-color);
+}
+
+.current-duel {
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-align: center;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--secondary-color);
+}
+
+.potion-checkbox {
+    display: none;
+}
+
+.potion-label {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+}
+
+.potion-checkbox:checked + .potion-label {
+    background-color: var(--secondary-color);
+}
+
+#history, #remaining {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
