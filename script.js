@@ -64,7 +64,7 @@ function initializeBoards() {
     );
 
     shuffleArray(allCases);
-    availableCases = [...allCases];
+    availableCases = [...allCases]; // Initialise availableCases avec toutes les cases
 
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
@@ -89,7 +89,11 @@ function initializeBoards() {
         }
     });
 }
-
+function startNewGame() {
+    initializeBoards();
+    updateRemaining();
+    // Autres initialisations nécessaires...
+}
 function generateDuel() {
     const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
     const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
@@ -248,17 +252,13 @@ function loadGameState() {
         Object.assign(team2Board, gameState.team2Board);
         team1Participants = gameState.team1Participants;
         team2Participants = gameState.team2Participants;
-        availableCases = gameState.availableCases;
+        availableCases = gameState.availableCases; // Assurez-vous que ceci est présent
         history = gameState.history;
         currentCase = gameState.currentCase;
         currentDuel = gameState.currentDuel;
         return true;
     }
     return false;
-}
-
-function clearGameState() {
-    localStorage.removeItem('tcsGameState');
 }
 
 function saveTeamNames() {
@@ -279,8 +279,7 @@ function saveTeamNames() {
     document.getElementById('teamNameOverlay').style.display = 'none';
     
     if (!hasGameStarted()) {
-        initializeBoards();
-        updateRemaining();
+        startNewGame();
         generateDuel();
     }
     saveGameState();
