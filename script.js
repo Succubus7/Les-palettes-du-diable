@@ -92,13 +92,14 @@ function getUniqueAction(currentPlayer) {
     // Remplacer {player} par le nom du joueur actuel
     action = action.replace("{player}", currentPlayer);
     
-    // Choisir un joueur aléatoire différent du joueur actuel
+    // Choisir des joueurs aléatoires différents du joueur actuel
     let allPlayers = [...team1Participants, ...team2Participants];
     let otherPlayers = allPlayers.filter(player => player !== currentPlayer);
-    let randomPlayer = otherPlayers[Math.floor(Math.random() * otherPlayers.length)];
+    shuffleArray(otherPlayers);
     
-    // Remplacer {randomPlayer} par le nom du joueur aléatoire
-    action = action.replace("{randomPlayer}", randomPlayer);
+    // Remplacer {randomPlayer} et {randomPlayer2} si présents
+    action = action.replace("{randomPlayer}", otherPlayers[0] || "un autre joueur");
+    action = action.replace("{randomPlayer2}", otherPlayers[1] || "un autre joueur");
     
     return action;
 }
