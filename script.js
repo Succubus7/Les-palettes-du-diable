@@ -74,6 +74,14 @@ const allActions = [
 
 let availableActions = [...allActions];
 
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function getUniqueAction(currentPlayer) {
     if (availableActions.length === 0) {
         availableActions = [...allActions];
@@ -93,21 +101,6 @@ function getUniqueAction(currentPlayer) {
     action = action.replace("{randomPlayer}", randomPlayer);
     
     return action;
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-function getUniqueAction() {
-    if (availableActions.length === 0) {
-        availableActions = [...allActions];
-        shuffleArray(availableActions);
-    }
-    return availableActions.pop();
 }
 
 function initializeBoards() {
