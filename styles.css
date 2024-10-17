@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    font-size: 24px;
 }
 
 .halloween-bg {
@@ -23,64 +24,68 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://example.com/halloween-bg.jpg');
+    background-image: url('https://cdn.midjourney.com/f7580c53-3713-4d0b-807b-2a4e7e251199/0_1.png');
     background-size: cover;
     background-position: center;
-    opacity: 0.2;
+    opacity: 0.3;
     z-index: -1;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
 }
 
 h1 {
     font-family: 'Nosifer', cursive;
-    font-size: 4rem;
+    font-size: 6rem;
     text-align: center;
     color: var(--primary-color);
-    text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+    text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color);
     animation: glow 2s ease-in-out infinite;
+    margin-bottom: 40px;
 }
 
 @keyframes glow {
-    0%, 100% { text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color); }
-    50% { text-shadow: 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color); }
+    0%, 100% { text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color); }
+    50% { text-shadow: 0 0 40px var(--secondary-color), 0 0 60px var(--secondary-color); }
 }
 
-.teams-container {
+.game-area {
     display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
 }
 
 .team {
     background-color: rgba(0, 0, 0, 0.7);
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
-    padding: 20px;
-    width: 45%;
-    box-shadow: 0 0 15px var(--primary-color);
+    border: 4px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 40px;
+    width: 30%;
+    box-shadow: 0 0 30px var(--primary-color);
 }
 
 .team h2 {
     font-family: 'Creepster', cursive;
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--primary-color);
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
-.action-area {
-    text-align: center;
-    margin-top: 30px;
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
 }
 
 #result {
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 40px 0;
     animation: pulse 1s ease-in-out infinite;
 }
 
@@ -93,12 +98,12 @@ h1 {
     background-color: var(--primary-color);
     color: var(--bg-color);
     border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 20px 40px;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 10px;
-    border-radius: 5px;
+    margin: 20px;
+    border-radius: 10px;
 }
 
 .btn:hover {
@@ -107,7 +112,7 @@ h1 {
 }
 
 #grim-reaper {
-    width: 200px;
+    width: 400px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -122,7 +127,7 @@ h1 {
 
 @keyframes floating {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-20px); }
 }
 
 .hidden {
@@ -131,8 +136,8 @@ h1 {
 
 #ghost {
     position: fixed;
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     pointer-events: none;
     z-index: 1000;
     transition: all 0.5s ease;
@@ -153,21 +158,56 @@ h1 {
 
 .overlay-content {
     background-color: var(--bg-color);
-    padding: 30px;
-    border-radius: 10px;
-    border: 2px solid var(--primary-color);
-    max-width: 500px;
+    padding: 60px;
+    border-radius: 20px;
+    border: 4px solid var(--primary-color);
+    max-width: 800px;
     width: 90%;
     position: relative;
 }
 
-input[type="text"] {
+.overlay-content h2 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.overlay-content input[type="text"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin: 10px 0;
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--primary-color);
+    border: 2px solid var(--primary-color);
     color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.overlay-content input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 3rem;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--secondary-color);
+}
+
+.current-duel {
+    font-size: 2.5rem;
+    margin: 40px 0;
+    text-align: center;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--secondary-color);
 }
 
 .potion-checkbox {
@@ -178,28 +218,26 @@ input[type="text"] {
     display: inline-block;
     background-color: var(--primary-color);
     color: var(--bg-color);
-    padding: 5px 10px;
-    border-radius: 3px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-right: 20px;
 }
 
 .potion-checkbox:checked + .potion-label {
     background-color: var(--secondary-color);
 }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: color 0.3s ease;
+#history, #remaining {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    text-align: center;
 }
 
-.close-btn:hover {
-    color: var(--secondary-color);
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
