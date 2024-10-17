@@ -37,13 +37,15 @@ body {
     padding: 40px;
 }
 
-        h1 {
-            font-family: 'Creepster', cursive;
-            font-size: 72px;
-            margin-bottom: 30px;
-            text-shadow: 4px 4px 8px #000000;
-            animation: glow 2s ease-in-out infinite;
-        }
+h1 {
+    font-family: 'Nosifer', cursive;
+    font-size: 6rem; /* Increased for larger screen */
+    text-align: center;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color);
+    animation: glow 2s ease-in-out infinite;
+    margin-bottom: 40px;
+}
 
 @keyframes glow {
     0%, 100% { text-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color); }
