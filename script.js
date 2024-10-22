@@ -331,17 +331,15 @@ function revealChallenge(team) {
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
     
-    // On retire la case de availableCases seulement quand elle est révélée
+    // On retire la case de availableCases quand elle est révélée
     const index = availableCases.indexOf(currentCase);
     if (index > -1) {
         availableCases.splice(index, 1);
     }
     
-    if (checkbox.checked && teamBoard[currentCase] === "fiole") {
+    // Si la case Fiole est cochée, c'est automatiquement une fiole
+    if (checkbox.checked) {
         challengeText.innerText = "Boire la fiole";
-    } else if (checkbox.checked && teamBoard[currentCase] !== "fiole") {
-        challengeText.innerText = "Cette case n'est pas une fiole !";
-        checkbox.checked = false;
     } else {
         const action = teamBoard[currentCase];
         challengeText.innerText = action === "vide" ? "Case vide" : action;
@@ -351,7 +349,7 @@ function revealChallenge(team) {
     document.querySelector(`#revealButton${team}`).classList.add('hidden');
     checkbox.disabled = true;
     
-    // Mise à jour du décompte seulement après la révélation
+    // Mise à jour du décompte après la révélation
     updateRemainingDisplay();
 }
 
