@@ -332,3 +332,22 @@ h1 {
     background-color: rgba(139, 19, 19, 0.2);
     border: 1px solid var(--secondary-color);
 }
+.restart-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(139, 19, 19, 0.6);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.restart-btn:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
