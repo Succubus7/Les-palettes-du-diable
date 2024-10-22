@@ -13,46 +13,14 @@ let team2Participants = [];
 let currentDuel = [];
 
 const halloweenNames = [
-    "Dracula", // Reste identique en français
-    "Frankenstein", // Reste identique en français
-    "Zombie", // Reste identique en français
-    "Loup-garou",
-    "Fantôme",
-    "Sorcière",
-    "Vampire", // Reste identique en français
-    "Momie",
-    "Squelette",
-    "Spectre",
-    "Banshee", // Souvent non traduit, mais on pourrait dire "Pleureuse"
-    "Gobelin",
-    "Goule",
-    "Citrouille",
-    "Chauve-souris",
-    "Araignée",
-    "Corbeau",
-    "Chat noir",
-    "Hibou",
-    "Troll", // Reste identique en français
-    "Clown", // Reste identique en français
-    "Épouvantail",
-    "Démon",
-    "Lutin maléfique",
-    "Spectre",
-    "Sorcier",
-    "Nécromancien",
-    "Faucheuse",
-    "Harpie",
-    "Sirène",
-    "Ogre", // Reste identique en français
-    "Croque-mitaine",
-    "Poltergeist", // Souvent non traduit, mais on pourrait dire "Esprit frappeur"
-    "Wendigo", // Généralement non traduit
-    "Changelin",
-    "Minotaure",
-    "Cyclope",
-    "Méduse",
-    "Kraken", // Reste identique en français
-    "Chimère"
+    "Dracula", "Frankenstein", "Zombie", "Loup-garou", "Fantôme",
+    "Sorcière", "Vampire", "Momie", "Squelette", "Spectre",
+    "Banshee", "Gobelin", "Goule", "Citrouille", "Chauve-souris",
+    "Araignée", "Corbeau", "Chat noir", "Hibou", "Troll",
+    "Clown", "Épouvantail", "Démon", "Lutin maléfique", "Spectre",
+    "Sorcier", "Nécromancien", "Faucheuse", "Harpie", "Sirène",
+    "Ogre", "Croque-mitaine", "Poltergeist", "Wendigo", "Changelin",
+    "Minotaure", "Cyclope", "Méduse", "Kraken", "Chimère"
 ];
 
 const allActions = [
@@ -81,35 +49,34 @@ const allActions = [
     "{player} doit faire un compliment à chaque joueur, mais en commençant par {randomPlayer}.",
     "{player} doit faire une imitation de célébrité choisie par {randomPlayer}.",
     "{player} doit faire deviner un film à {randomPlayer} en n'utilisant que des sons.",
-"{player} doit révéler son plus grand fantasme sexuel.",
-"{player} doit décrire en détail sa première expérience sexuelle.",
-"{player} doit avouer le lieu le plus insolite où il/elle a eu des rapports sexuels.",
-"{player} doit partager sa position sexuelle préférée et expliquer pourquoi.",
-"{player} doit révéler le nombre de partenaires sexuels qu'il/elle a eu.",
-"{player} doit avouer si il a déjà voulu coucher/flirter avec un des participant (hors partenaire actuel!).",
-"{player} doit avouer s'il/elle a déjà eu des rapports avec quelqu'un du même sexe, et si oui, raconter l'expérience.",
-"{player} doit dire quelle partie du corps de {randomPlayer} il/elle trouve la plus attirante.",
-"{player} doit avouer s'il/elle a déjà eu des pensées coquines concernant {randomPlayer}.",
-"{player} doit dire quel type de relation sexuelle il/elle imagine que {randomPlayer} préfère.",
-"{player} doit deviner et décrire les sous-vêtements que porte actuellement {randomPlayer}.",
-"{player} doit dire s'il/elle pense que {randomPlayer} est doué(e) au lit et pourquoi.",
-"{player} doit avouer s'il/elle a déjà espionné ou cherché à voir {randomPlayer} nu(e).",
-"{player} doit dire quel personnage de film érotique {randomPlayer} pourrait incarner.",
-"{player} doit choisir : avoir des rapports avec {randomPlayer} devant tout le monde ici présent, ou avec tout le monde ici présent devant {randomPlayer} ?",
-"{player} doit choisir : ne plus jamais avoir de rapports sexuels ou avoir des rapports uniquement en public ?",
-"{player} doit choisir : échanger de partenaire sexuel avec {randomPlayer} pour une nuit, ou avoir un plan à trois avec {randomPlayer} et {randomPlayer2} ?",
-"{player} doit choisir : embrasser passionnément {randomPlayer} devant tout le monde, ou faire un strip-tease complet pour {randomPlayer2} en privé ?",
-"{player} doit choisir : avoir un rendez-vous romantique très public avec {randomPlayer}, ou une nuit secrète mais torride avec {randomPlayer2} ?",
-"{player} doit choisir : être le/la serviteur(se) sexuel(le) de {randomPlayer} pendant une semaine, ou avoir un plan à trois avec {randomPlayer2} et la personne de son choix dans cette pièce ?",
-"{player} doit choisir : échanger de partenaire avec {randomPlayer} pour un mois, ou ne plus jamais pouvoir avoir de rapports avec quelqu'un d'autre que {randomPlayer2} ?",
-"{player} doit choisir : laisser {randomPlayer} contrôler un sex-toy télécommandé sur toi pendant toute une journée en public, ou laisser {randomPlayer2} choisir tous tes partenaires sexuels pendant un an ?",
-"{player} doit choisir : regarder une vidéo de tes parents en train de faire l'amour, ou laisser {randomPlayer} et {randomPlayer2} regarder une vidéo de toi en train de te masturber ?",
-"{player} doit choisir : avoir des rapports sur un manège dans un parc d'attractions avec {randomPlayer}, ou dans une bibliothèque bondée avec {randomPlayer2} ?",
-"{player} doit choisir : être nu(e) devant tout le groupe pendant le reste de la soirée, ou embrasser chaque partie du corps de {randomPlayer} (au choix de {randomPlayer}) ?",
+    "{player} doit révéler son plus grand fantasme sexuel.",
+    "{player} doit décrire en détail sa première expérience sexuelle.",
+    "{player} doit avouer le lieu le plus insolite où il/elle a eu des rapports sexuels.",
+    "{player} doit partager sa position sexuelle préférée et expliquer pourquoi.",
+    "{player} doit révéler le nombre de partenaires sexuels qu'il/elle a eu.",
+    "{player} doit avouer si il a déjà voulu coucher/flirter avec un des participant (hors partenaire actuel!).",
+    "{player} doit avouer s'il/elle a déjà eu des rapports avec quelqu'un du même sexe, et si oui, raconter l'expérience.",
+    "{player} doit dire quelle partie du corps de {randomPlayer} il/elle trouve la plus attirante.",
+    "{player} doit avouer s'il/elle a déjà eu des pensées coquines concernant {randomPlayer}.",
+    "{player} doit dire quel type de relation sexuelle il/elle imagine que {randomPlayer} préfère.",
+    "{player} doit deviner et décrire les sous-vêtements que porte actuellement {randomPlayer}.",
+    "{player} doit dire s'il/elle pense que {randomPlayer} est doué(e) au lit et pourquoi.",
+    "{player} doit avouer s'il/elle a déjà espionné ou cherché à voir {randomPlayer} nu(e).",
+    "{player} doit dire quel personnage de film érotique {randomPlayer} pourrait incarner.",
+    "{player} doit choisir : avoir des rapports avec {randomPlayer} devant tout le monde ici présent, ou avec tout le monde ici présent devant {randomPlayer} ?",
+    "{player} doit choisir : ne plus jamais avoir de rapports sexuels ou avoir des rapports uniquement en public ?",
+    "{player} doit choisir : échanger de partenaire sexuel avec {randomPlayer} pour une nuit, ou avoir un plan à trois avec {randomPlayer} et {randomPlayer2} ?",
+    "{player} doit choisir : embrasser passionnément {randomPlayer} devant tout le monde, ou faire un strip-tease complet pour {randomPlayer2} en privé ?",
+    "{player} doit choisir : avoir un rendez-vous romantique très public avec {randomPlayer}, ou une nuit secrète mais torride avec {randomPlayer2} ?",
+    "{player} doit choisir : être le/la serviteur(se) sexuel(le) de {randomPlayer} pendant une semaine, ou avoir un plan à trois avec {randomPlayer2} et la personne de son choix dans cette pièce ?",
+    "{player} doit choisir : échanger de partenaire avec {randomPlayer} pour un mois, ou ne plus jamais pouvoir avoir de rapports avec quelqu'un d'autre que {randomPlayer2} ?",
+    "{player} doit choisir : laisser {randomPlayer} contrôler un sex-toy télécommandé sur toi pendant toute une journée en public, ou laisser {randomPlayer2} choisir tous tes partenaires sexuels pendant un an ?",
+    "{player} doit choisir : regarder une vidéo de tes parents en train de faire l'amour, ou laisser {randomPlayer} et {randomPlayer2} regarder une vidéo de toi en train de te masturber ?",
+    "{player} doit choisir : avoir des rapports sur un manège dans un parc d'attractions avec {randomPlayer}, ou dans une bibliothèque bondée avec {randomPlayer2} ?",
+    "{player} doit choisir : être nu(e) devant tout le groupe pendant le reste de la soirée, ou embrasser chaque partie du corps de {randomPlayer} (au choix de {randomPlayer}) ?"
 ];
 
 let availableActions = [...allActions];
-
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -125,15 +92,12 @@ function getUniqueAction(currentPlayer) {
     }
     let action = availableActions.pop();
     
-    // Remplacer {player} par le nom du joueur actuel
     action = action.replace("{player}", currentPlayer);
     
-    // Choisir des joueurs aléatoires différents du joueur actuel
     let allPlayers = [...team1Participants, ...team2Participants];
     let otherPlayers = allPlayers.filter(player => player !== currentPlayer);
     shuffleArray(otherPlayers);
     
-    // Remplacer {randomPlayer} et {randomPlayer2} si présents
     action = action.replace("{randomPlayer}", otherPlayers[0] || "un autre joueur");
     action = action.replace("{randomPlayer2}", otherPlayers[1] || "un autre joueur");
     
@@ -151,7 +115,7 @@ function initializeBoards() {
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
         
-        // Augmenté à 20 cases vides
+        // 20 cases vides
         if (i < 20) {
             team1Board[currentCase] = "vide";
             team2Board[currentCase] = "vide";
@@ -162,19 +126,102 @@ function initializeBoards() {
             team2Board[currentCase] = getUniqueAction(team2Player);
         }
     }
+}
 
-    const team2Cases = Object.keys(team2Board);
-    shuffleArray(team2Cases);
+function countRemainingCases() {
+    const counts = {
+        team1: {
+            empty: 0,
+            potion: 0,
+            action: 0,
+            total: 0
+        },
+        team2: {
+            empty: 0,
+            potion: 0,
+            action: 0,
+            total: 0
+        }
+    };
 
-    team2Cases.forEach((c, i) => {
-        // Augmenté à 20 cases vides
-        if (i < 20) {
-            team2Board[c] = "vide";
-        } else {
-            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
-            team2Board[c] = getUniqueAction(team2Player);
+    availableCases.forEach(caseId => {
+        // Compter pour l'équipe 1
+        if (team1Board[caseId] === "vide") {
+            counts.team1.empty++;
+        } else if (document.querySelector(`#potionCheckbox1`).checked && 
+                  document.querySelector('#challenge1 p').innerText === "Boire la fiole") {
+            counts.team1.potion++;
+        } else if (team1Board[caseId] !== "vide") {
+            counts.team1.action++;
+        }
+        
+        // Compter pour l'équipe 2
+        if (team2Board[caseId] === "vide") {
+            counts.team2.empty++;
+        } else if (document.querySelector(`#potionCheckbox2`).checked && 
+                  document.querySelector('#challenge2 p').innerText === "Boire la fiole") {
+            counts.team2.potion++;
+        } else if (team2Board[caseId] !== "vide") {
+            counts.team2.action++;
         }
     });
+
+    counts.team1.total = counts.team1.empty + counts.team1.potion + counts.team1.action;
+    counts.team2.total = counts.team2.empty + counts.team2.potion + counts.team2.action;
+
+    return counts;
+}
+
+function updateRemainingDisplay() {
+    const counts = countRemainingCases();
+    
+    const remainingElement = document.getElementById('remaining');
+    remainingElement.innerHTML = `
+        <div class="counters-container">
+            <div class="team-counter">
+                <h4>${document.querySelector('#challenge1 h2').textContent}</h4>
+                <div class="counter-stats">
+                    <div class="counter-stat">
+                        <div class="stat-label">Cases vides</div>
+                        <div class="stat-value">${counts.team1.empty}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Fioles</div>
+                        <div class="stat-value">${counts.team1.potion}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Actions</div>
+                        <div class="stat-value">${counts.team1.action}</div>
+                    </div>
+                    <div class="counter-stat total-cases">
+                        <div class="stat-label">Total restant</div>
+                        <div class="stat-value">${counts.team1.total}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-counter">
+                <h4>${document.querySelector('#challenge2 h2').textContent}</h4>
+                <div class="counter-stats">
+                    <div class="counter-stat">
+                        <div class="stat-label">Cases vides</div>
+                        <div class="stat-value">${counts.team2.empty}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Fioles</div>
+                        <div class="stat-value">${counts.team2.potion}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Actions</div>
+                        <div class="stat-value">${counts.team2.action}</div>
+                    </div>
+                    <div class="counter-stat total-cases">
+                        <div class="stat-label">Total restant</div>
+                        <div class="stat-value">${counts.team2.total}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function generateDuel() {
@@ -196,7 +243,6 @@ function closeDuelOverlay() {
     document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
     document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
 }
-
 function startGeneration() {
     if (isGenerating) return;
     isGenerating = true;
@@ -204,7 +250,6 @@ function startGeneration() {
     document.getElementById('invocationSound').play();
     shuffleDisplay();
 }
-
 function shuffleDisplay() {
     if (availableCases.length === 0) {
         document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
@@ -285,6 +330,8 @@ function revealChallenge(team) {
     challengeText.classList.remove('hidden');
     document.querySelector(`#revealButton${team}`).classList.add('hidden');
     checkbox.disabled = true;
+    
+    updateRemainingDisplay();
 }
 
 function updateHistory() {
@@ -293,8 +340,7 @@ function updateHistory() {
 }
 
 function updateRemaining() {
-    const remainingElement = document.getElementById('remaining');
-    remainingElement.innerHTML = `<h3>Cases restantes : ${availableCases.length}</h3>`;
+    updateRemainingDisplay();
 }
 
 function moveGhost() {
@@ -395,8 +441,7 @@ function updateUI() {
 }
 
 function closeOverlay() {
-    // Ne fermez pas l'overlay automatiquement, laissez l'utilisateur remplir les informations
-    // document.getElementById('teamNameOverlay').style.display = 'none';
+    // Ne fermez pas l'overlay automatiquement
 }
 
 function fillRandomHalloweenNames() {
@@ -420,105 +465,7 @@ function fillRandomHalloweenNames() {
     });
 }
 
-// Fonction pour compter les différents types de cases pour chaque équipe
-function countRemainingCases() {
-    const counts = {
-        team1: {
-            empty: 0,
-            potion: 0,
-            action: 0,
-            total: 0
-        },
-        team2: {
-            empty: 0,
-            potion: 0,
-            action: 0,
-            total: 0
-        }
-    };
-
-    availableCases.forEach(caseId => {
-        // Compter pour l'équipe 1
-        if (team1Board[caseId] === "vide") {
-            counts.team1.empty++;
-        } else if (document.querySelector(`#potionCheckbox1`).checked && 
-                  document.querySelector('#challenge1 p').innerText === "Boire la fiole") {
-            counts.team1.potion++;
-        } else if (team1Board[caseId] !== "vide") {
-            counts.team1.action++;
-        }
-        
-        // Compter pour l'équipe 2
-        if (team2Board[caseId] === "vide") {
-            counts.team2.empty++;
-        } else if (document.querySelector(`#potionCheckbox2`).checked && 
-                  document.querySelector('#challenge2 p').innerText === "Boire la fiole") {
-            counts.team2.potion++;
-        } else if (team2Board[caseId] !== "vide") {
-            counts.team2.action++;
-        }
-    });
-
-    counts.team1.total = counts.team1.empty + counts.team1.potion + counts.team1.action;
-    counts.team2.total = counts.team2.empty + counts.team2.potion + counts.team2.action;
-
-    return counts;
-}
-
-// Modification de la fonction updateRemaining existante
-function updateRemaining() {
-    updateRemainingDisplay();
-}
-    
-    const remainingElement = document.getElementById('remaining');
-    remainingElement.innerHTML = `
-        <div class="counters-container">
-            <div class="team-counter">
-                <h4>${document.querySelector('#challenge1 h2').textContent}</h4>
-                <div class="counter-stats">
-                    <div class="counter-stat">
-                        <div class="stat-label">Cases vides</div>
-                        <div class="stat-value">${counts.team1.empty}</div>
-                    </div>
-                    <div class="counter-stat">
-                        <div class="stat-label">Fioles</div>
-                        <div class="stat-value">${counts.team1.potion}</div>
-                    </div>
-                    <div class="counter-stat">
-                        <div class="stat-label">Actions</div>
-                        <div class="stat-value">${counts.team1.action}</div>
-                    </div>
-                    <div class="counter-stat total-cases">
-                        <div class="stat-label">Total restant</div>
-                        <div class="stat-value">${counts.team1.total}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-counter">
-                <h4>${document.querySelector('#challenge2 h2').textContent}</h4>
-                <div class="counter-stats">
-                    <div class="counter-stat">
-                        <div class="stat-label">Cases vides</div>
-                        <div class="stat-value">${counts.team2.empty}</div>
-                    </div>
-                    <div class="counter-stat">
-                        <div class="stat-label">Fioles</div>
-                        <div class="stat-value">${counts.team2.potion}</div>
-                    </div>
-                    <div class="counter-stat">
-                        <div class="stat-label">Actions</div>
-                        <div class="stat-value">${counts.team2.action}</div>
-                    </div>
-                    <div class="counter-stat total-cases">
-                        <div class="stat-label">Total restant</div>
-                        <div class="stat-value">${counts.team2.total}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
+// Event listeners et initialisation
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
@@ -529,6 +476,7 @@ window.onload = function() {
     }
     moveGhost();
 };
+
 window.addEventListener('resize', moveGhost);
 document.getElementById('nextDuelButton').addEventListener('click', nextDuel);
 document.getElementById('restartGameButton').addEventListener('click', restartGame);
