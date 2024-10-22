@@ -151,7 +151,8 @@ function initializeBoards() {
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
         
-        if (i < 15) {
+        // Augmenté à 20 cases vides
+        if (i < 20) {
             team1Board[currentCase] = "vide";
             team2Board[currentCase] = "vide";
         } else {
@@ -166,7 +167,8 @@ function initializeBoards() {
     shuffleArray(team2Cases);
 
     team2Cases.forEach((c, i) => {
-        if (i < 15) {
+        // Augmenté à 20 cases vides
+        if (i < 20) {
             team2Board[c] = "vide";
         } else {
             const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
