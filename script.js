@@ -114,24 +114,33 @@ function initializeBoards() {
         numbers.map(number => `${letter}${number}`)
     );
 
-    shuffleArray(allCases);
+    // On mélange les cases pour chaque équipe indépendamment
+    const casesTeam1 = [...allCases];
+    const casesTeam2 = [...allCases];
+    shuffleArray(casesTeam1);
+    shuffleArray(casesTeam2);
+
     availableCases = [...allCases];
 
-    for (let i = 0; i < allCases.length; i++) {
-        const currentCase = allCases[i];
-        
-        if (i < 20) {
-            // 20 cases vides
-            team1Board[currentCase] = "vide";
-            team2Board[currentCase] = "vide";
-        } else {
-            // Le reste en actions
+    // Initialisation équipe 1
+    casesTeam1.forEach((caseId, index) => {
+        if (index < 25) { // Les 25 premières cases sont des actions
             const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
-            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
-            team1Board[currentCase] = getUniqueAction(team1Player);
-            team2Board[currentCase] = getUniqueAction(team2Player);
+            team1Board[caseId] = getUniqueAction(team1Player);
+        } else { // Les 35 autres sont vides
+            team1Board[caseId] = "vide";
         }
-    }
+    });
+
+    // Initialisation équipe 2
+    casesTeam2.forEach((caseId, index) => {
+        if (index < 25) { // Les 25 premières cases sont des actions
+            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
+            team2Board[caseId] = getUniqueAction(team2Player);
+        } else { // Les 35 autres sont vides
+            team2Board[caseId] = "vide";
+        }
+    });
 }
 
 function countRemainingCases() {
