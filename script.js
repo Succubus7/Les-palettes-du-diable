@@ -239,11 +239,11 @@ function generateDuel() {
     const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
     currentDuel = [team1Player, team2Player];
     
-    const team1Name = document.querySelector('#challenge1 h2').textContent;
-    const team2Name = document.querySelector('#challenge2 h2').textContent;
-    
-    const duelAnnouncement = `${team1Player} (${team1Name}) VS ${team2Player} (${team2Name})`;
-    document.getElementById('duelAnnouncement').innerText = duelAnnouncement;
+    const duelAnnouncement = `
+        ${team1Player}
+        <span class="vs">VS</span>
+        ${team2Player}`;
+    document.getElementById('duelAnnouncement').innerHTML = duelAnnouncement;
     
     document.getElementById('duelOverlay').style.display = 'flex';
 }
