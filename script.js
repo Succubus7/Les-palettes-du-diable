@@ -105,6 +105,9 @@ function getUniqueAction(currentPlayer) {
 }
 
 function initializeBoards() {
+    // Réinitialisation du compteur de fioles
+    remainingPotions = 15;
+
     const allCases = letters.flatMap(letter => 
         numbers.map(number => `${letter}${number}`)
     );
@@ -112,93 +115,66 @@ function initializeBoards() {
     shuffleArray(allCases);
     availableCases = [...allCases];
 
-    // On initialise d'abord toutes les cases
-    allCases.forEach(currentCase => {
-        team1Board[currentCase] = "vide";
-        team2Board[currentCase] = "vide";
-    });
-
-    // Distribution des types de cases pour chaque équipe
-    let remainingCases = [...allCases];
-    shuffleArray(remainingCases);
-
-    // 25 cases actions
-    for (let i = 0; i < 25; i++) {
-        const caseId = remainingCases[i];
-        const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
-        const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
-        team1Board[caseId] = getUniqueAction(team1Player);
-        team2Board[caseId] = getUniqueAction(team2Player);
+    for (let i = 0; i < allCases.length; i++) {
+        const currentCase = allCases[i];
+        
+        if (i < 20) {
+            // 20 cases sont vides
+            team1Board[currentCase] = "vide";
+            team2Board[currentCase] = "vide";
+        } else {
+            // Les 40 autres cases sont des actions possibles
+            const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
+            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
+            team1Board[currentCase] = getUniqueAction(team1Player);
+            team2Board[currentCase] = getUniqueAction(team2Player);
+        }
     }
-
-    // 15 cases fioles
-    for (let i = 25; i < 40; i++) {
-        const caseId = remainingCases[i];
-        team1Board[caseId] = "fiole";
-        team2Board[caseId] = "fiole";
-    }
-
-    // Les 20 cases restantes restent vides
 }
 
 function countRemainingCases() {
     const counts = {
         team1: {
-            empty: 0,
-            potion: 0,
-            action: 0,
-            total: 0
+            empty: 20,  // On commence avec 20 cases vides
+            potion: 15, // On commence avec 15 fioles
+            action: 25, // On commence avec 25 actions
+            total: 60   // Total initial
         },
         team2: {
-            empty: 0,
-            potion: 0,
-            action: 0,
-            total: 0
+            empty: 20,  // On commence avec 20 cases vides
+            potion: 15, // On commence avec 15 fioles
+            action: 25, // On commence avec 25 actions
+            total: 60   // Total initial
         }
     };
 
-    // On compte seulement les cases qui n'ont pas encore été révélées
-    availableCases.forEach(caseId => {
+    // Pour chaque case révélée, on décrémente le compteur approprié
+    const allCases = letters.flatMap(letter => numbers.map(number => `${letter}${number}`));
+    const revealedCases = allCases.filter(caseId => !availableCases.includes(caseId));
+
+    revealedCases.forEach(caseId => {
         // Pour l'équipe 1
-        if (team1Board[caseId] === "vide") {
-            counts.team1.empty++;
-        } else {
-            counts.team1.action++;
+        const team1Text = document.querySelector(`#challenge1 p[data-case="${caseId}"]`)?.innerText;
+        if (team1Text === "Boire la fiole") {
+            counts.team1.potion--;
+        } else if (team1Text === "Case vide") {
+            counts.team1.empty--;
+        } else if (team1Text && team1Text !== "Cette case n'est pas une fiole !") {
+            counts.team1.action--;
         }
-        
+
         // Pour l'équipe 2
-        if (team2Board[caseId] === "vide") {
-            counts.team2.empty++;
-        } else {
-            counts.team2.action++;
+        const team2Text = document.querySelector(`#challenge2 p[data-case="${caseId}"]`)?.innerText;
+        if (team2Text === "Boire la fiole") {
+            counts.team2.potion--;
+        } else if (team2Text === "Case vide") {
+            counts.team2.empty--;
+        } else if (team2Text && team2Text !== "Cette case n'est pas une fiole !") {
+            counts.team2.action--;
         }
     });
 
-    // On compte les fioles dans les cases déjà révélées
-    document.querySelectorAll('#challenge1 p').forEach(p => {
-        if (!p.classList.contains('hidden') && p.innerText === "Boire la fiole") {
-            counts.team1.potion++;
-            // On réduit le compte des actions si c'était une action qui a été transformée en fiole
-            if (team1Board[p.getAttribute('data-case')] !== "vide") {
-                counts.team1.action--;
-            } else {
-                counts.team1.empty--;
-            }
-        }
-    });
-
-    document.querySelectorAll('#challenge2 p').forEach(p => {
-        if (!p.classList.contains('hidden') && p.innerText === "Boire la fiole") {
-            counts.team2.potion++;
-            // On réduit le compte des actions si c'était une action qui a été transformée en fiole
-            if (team2Board[p.getAttribute('data-case')] !== "vide") {
-                counts.team2.action--;
-            } else {
-                counts.team2.empty--;
-            }
-        }
-    });
-
+    // Mise à jour des totaux
     counts.team1.total = counts.team1.empty + counts.team1.potion + counts.team1.action;
     counts.team2.total = counts.team2.empty + counts.team2.potion + counts.team2.action;
 
@@ -348,13 +324,12 @@ function resetPotionCheckboxes() {
     });
 }
 
+let remainingPotions = 15; // Nombre de fioles disponibles par équipe
+
 function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
-    
-    // Ajouter l'attribut data-case pour tracker la case
-    challengeText.setAttribute('data-case', currentCase);
     
     // On retire la case de availableCases quand elle est révélée
     const index = availableCases.indexOf(currentCase);
@@ -362,9 +337,17 @@ function revealChallenge(team) {
         availableCases.splice(index, 1);
     }
     
-    // Si la case Fiole est cochée, c'est automatiquement une fiole
+    // Si la case Fiole est cochée et qu'il reste des fioles disponibles
     if (checkbox.checked) {
-        challengeText.innerText = "Boire la fiole";
+        if (team === 1 && remainingPotions > 0) {
+            challengeText.innerText = "Boire la fiole";
+            remainingPotions--;
+        } else {
+            alert("Plus de fioles disponibles !");
+            checkbox.checked = false;
+            const action = teamBoard[currentCase];
+            challengeText.innerText = action === "vide" ? "Case vide" : action;
+        }
     } else {
         const action = teamBoard[currentCase];
         challengeText.innerText = action === "vide" ? "Case vide" : action;
@@ -374,7 +357,6 @@ function revealChallenge(team) {
     document.querySelector(`#revealButton${team}`).classList.add('hidden');
     checkbox.disabled = true;
     
-    // Mise à jour du décompte après la révélation
     updateRemainingDisplay();
 }
 
