@@ -157,12 +157,11 @@ function countRemainingCases() {
         }
     };
 
+    // On compte seulement les cases qui n'ont pas encore été révélées
     availableCases.forEach(caseId => {
         // Pour l'équipe 1
         if (team1Board[caseId] === "vide") {
             counts.team1.empty++;
-        } else if (team1Board[caseId] === "fiole") {
-            counts.team1.potion++;
         } else {
             counts.team1.action++;
         }
@@ -170,10 +169,33 @@ function countRemainingCases() {
         // Pour l'équipe 2
         if (team2Board[caseId] === "vide") {
             counts.team2.empty++;
-        } else if (team2Board[caseId] === "fiole") {
-            counts.team2.potion++;
         } else {
             counts.team2.action++;
+        }
+    });
+
+    // On compte les fioles dans les cases déjà révélées
+    document.querySelectorAll('#challenge1 p').forEach(p => {
+        if (!p.classList.contains('hidden') && p.innerText === "Boire la fiole") {
+            counts.team1.potion++;
+            // On réduit le compte des actions si c'était une action qui a été transformée en fiole
+            if (team1Board[p.getAttribute('data-case')] !== "vide") {
+                counts.team1.action--;
+            } else {
+                counts.team1.empty--;
+            }
+        }
+    });
+
+    document.querySelectorAll('#challenge2 p').forEach(p => {
+        if (!p.classList.contains('hidden') && p.innerText === "Boire la fiole") {
+            counts.team2.potion++;
+            // On réduit le compte des actions si c'était une action qui a été transformée en fiole
+            if (team2Board[p.getAttribute('data-case')] !== "vide") {
+                counts.team2.action--;
+            } else {
+                counts.team2.empty--;
+            }
         }
     });
 
@@ -330,6 +352,9 @@ function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
+    
+    // Ajouter l'attribut data-case pour tracker la case
+    challengeText.setAttribute('data-case', currentCase);
     
     // On retire la case de availableCases quand elle est révélée
     const index = availableCases.indexOf(currentCase);
