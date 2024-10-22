@@ -112,14 +112,20 @@ function initializeBoards() {
     shuffleArray(allCases);
     availableCases = [...allCases];
 
+    // Total de 60 cases à distribuer (20 + 15 + 25)
     for (let i = 0; i < allCases.length; i++) {
         const currentCase = allCases[i];
         
-        // 20 cases vides
         if (i < 20) {
+            // 20 premières cases sont vides
             team1Board[currentCase] = "vide";
             team2Board[currentCase] = "vide";
-        } else {
+        } else if (i < 35) {
+            // 15 cases suivantes seront potentiellement des fioles (vides au début)
+            team1Board[currentCase] = "vide"; // sera marqué comme "Boire la fiole" si checkbox cochée
+            team2Board[currentCase] = "vide"; // sera marqué comme "Boire la fiole" si checkbox cochée
+        } else if (i < 60) {
+            // 25 dernières cases sont des actions
             const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
             const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
             team1Board[currentCase] = getUniqueAction(team1Player);
