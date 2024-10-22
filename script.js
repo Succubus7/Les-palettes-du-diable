@@ -112,26 +112,33 @@ function initializeBoards() {
     shuffleArray(allCases);
     availableCases = [...allCases];
 
-    // Total de 60 cases à distribuer (20 + 15 + 25)
-    for (let i = 0; i < allCases.length; i++) {
-        const currentCase = allCases[i];
-        
-        if (i < 20) {
-            // 20 premières cases sont vides
-            team1Board[currentCase] = "vide";
-            team2Board[currentCase] = "vide";
-        } else if (i < 35) {
-            // 15 cases suivantes seront potentiellement des fioles (vides au début)
-            team1Board[currentCase] = "vide"; // sera marqué comme "Boire la fiole" si checkbox cochée
-            team2Board[currentCase] = "vide"; // sera marqué comme "Boire la fiole" si checkbox cochée
-        } else if (i < 60) {
-            // 25 dernières cases sont des actions
-            const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
-            const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
-            team1Board[currentCase] = getUniqueAction(team1Player);
-            team2Board[currentCase] = getUniqueAction(team2Player);
-        }
+    // On initialise d'abord toutes les cases
+    allCases.forEach(currentCase => {
+        team1Board[currentCase] = "vide";
+        team2Board[currentCase] = "vide";
+    });
+
+    // Distribution des types de cases pour chaque équipe
+    let remainingCases = [...allCases];
+    shuffleArray(remainingCases);
+
+    // 25 cases actions
+    for (let i = 0; i < 25; i++) {
+        const caseId = remainingCases[i];
+        const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
+        const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
+        team1Board[caseId] = getUniqueAction(team1Player);
+        team2Board[caseId] = getUniqueAction(team2Player);
     }
+
+    // 15 cases fioles
+    for (let i = 25; i < 40; i++) {
+        const caseId = remainingCases[i];
+        team1Board[caseId] = "fiole";
+        team2Board[caseId] = "fiole";
+    }
+
+    // Les 20 cases restantes restent vides
 }
 
 function countRemainingCases() {
@@ -151,23 +158,21 @@ function countRemainingCases() {
     };
 
     availableCases.forEach(caseId => {
-        // Compter pour l'équipe 1
+        // Pour l'équipe 1
         if (team1Board[caseId] === "vide") {
             counts.team1.empty++;
-        } else if (document.querySelector(`#potionCheckbox1`).checked && 
-                  document.querySelector('#challenge1 p').innerText === "Boire la fiole") {
+        } else if (team1Board[caseId] === "fiole") {
             counts.team1.potion++;
-        } else if (team1Board[caseId] !== "vide") {
+        } else {
             counts.team1.action++;
         }
         
-        // Compter pour l'équipe 2
+        // Pour l'équipe 2
         if (team2Board[caseId] === "vide") {
             counts.team2.empty++;
-        } else if (document.querySelector(`#potionCheckbox2`).checked && 
-                  document.querySelector('#challenge2 p').innerText === "Boire la fiole") {
+        } else if (team2Board[caseId] === "fiole") {
             counts.team2.potion++;
-        } else if (team2Board[caseId] !== "vide") {
+        } else {
             counts.team2.action++;
         }
     });
@@ -324,11 +329,14 @@ function resetPotionCheckboxes() {
 function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
+    const teamBoard = team === 1 ? team1Board : team2Board;
     
-    if (checkbox.checked) {
+    if (checkbox.checked && teamBoard[currentCase] === "fiole") {
         challengeText.innerText = "Boire la fiole";
+    } else if (checkbox.checked && teamBoard[currentCase] !== "fiole") {
+        challengeText.innerText = "Cette case n'est pas une fiole !";
+        checkbox.checked = false;
     } else {
-        const teamBoard = team === 1 ? team1Board : team2Board;
         const action = teamBoard[currentCase];
         challengeText.innerText = action === "vide" ? "Case vide" : action;
     }
