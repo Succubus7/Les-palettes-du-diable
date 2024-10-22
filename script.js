@@ -419,6 +419,106 @@ function fillRandomHalloweenNames() {
         }
     });
 }
+
+// Fonction pour compter les différents types de cases pour chaque équipe
+function countRemainingCases() {
+    const counts = {
+        team1: {
+            empty: 0,
+            potion: 0,
+            action: 0,
+            total: 0
+        },
+        team2: {
+            empty: 0,
+            potion: 0,
+            action: 0,
+            total: 0
+        }
+    };
+
+    availableCases.forEach(caseId => {
+        // Compter pour l'équipe 1
+        if (team1Board[caseId] === "vide") {
+            counts.team1.empty++;
+        } else if (document.querySelector(`#potionCheckbox1`).checked && 
+                  document.querySelector('#challenge1 p').innerText === "Boire la fiole") {
+            counts.team1.potion++;
+        } else if (team1Board[caseId] !== "vide") {
+            counts.team1.action++;
+        }
+        
+        // Compter pour l'équipe 2
+        if (team2Board[caseId] === "vide") {
+            counts.team2.empty++;
+        } else if (document.querySelector(`#potionCheckbox2`).checked && 
+                  document.querySelector('#challenge2 p').innerText === "Boire la fiole") {
+            counts.team2.potion++;
+        } else if (team2Board[caseId] !== "vide") {
+            counts.team2.action++;
+        }
+    });
+
+    counts.team1.total = counts.team1.empty + counts.team1.potion + counts.team1.action;
+    counts.team2.total = counts.team2.empty + counts.team2.potion + counts.team2.action;
+
+    return counts;
+}
+
+// Modification de la fonction updateRemaining existante
+function updateRemaining() {
+    updateRemainingDisplay();
+}
+    
+    const remainingElement = document.getElementById('remaining');
+    remainingElement.innerHTML = `
+        <div class="counters-container">
+            <div class="team-counter">
+                <h4>${document.querySelector('#challenge1 h2').textContent}</h4>
+                <div class="counter-stats">
+                    <div class="counter-stat">
+                        <div class="stat-label">Cases vides</div>
+                        <div class="stat-value">${counts.team1.empty}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Fioles</div>
+                        <div class="stat-value">${counts.team1.potion}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Actions</div>
+                        <div class="stat-value">${counts.team1.action}</div>
+                    </div>
+                    <div class="counter-stat total-cases">
+                        <div class="stat-label">Total restant</div>
+                        <div class="stat-value">${counts.team1.total}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-counter">
+                <h4>${document.querySelector('#challenge2 h2').textContent}</h4>
+                <div class="counter-stats">
+                    <div class="counter-stat">
+                        <div class="stat-label">Cases vides</div>
+                        <div class="stat-value">${counts.team2.empty}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Fioles</div>
+                        <div class="stat-value">${counts.team2.potion}</div>
+                    </div>
+                    <div class="counter-stat">
+                        <div class="stat-label">Actions</div>
+                        <div class="stat-value">${counts.team2.action}</div>
+                    </div>
+                    <div class="counter-stat total-cases">
+                        <div class="stat-label">Total restant</div>
+                        <div class="stat-value">${counts.team2.total}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 window.onload = function() {
     if (loadGameState()) {
         updateUI();
