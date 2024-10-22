@@ -277,3 +277,58 @@ h1 {
     justify-content: center;
     margin-top: 30px;
 }
+/* Styles pour les compteurs */
+.counters-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.team-counter {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    width: 45%;
+    box-shadow: 0 0 15px var(--secondary-color);
+}
+
+.team-counter h4 {
+    font-family: 'Creepster', cursive;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.counter-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.counter-stat {
+    background-color: rgba(255, 102, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.total-cases {
+    grid-column: 1 / -1;
+    background-color: rgba(139, 19, 19, 0.2);
+    border: 1px solid var(--secondary-color);
+}
