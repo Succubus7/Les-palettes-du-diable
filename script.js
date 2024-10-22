@@ -288,7 +288,7 @@ function generateCase() {
     }
 
     const randomIndex = Math.floor(Math.random() * availableCases.length);
-    currentCase = availableCases.splice(randomIndex, 1)[0];
+    currentCase = availableCases[randomIndex]; // On ne retire plus la case ici
     
     document.getElementById('result').innerText = currentCase;
     history.unshift(currentCase);
@@ -297,7 +297,7 @@ function generateCase() {
     showRevealButtons();
     resetPotionCheckboxes();
     updateHistory();
-    updateRemaining();
+    // Supprimé updateRemaining() ici
 
     isGenerating = false;
     document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
@@ -331,6 +331,12 @@ function revealChallenge(team) {
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
     
+    // On retire la case de availableCases seulement quand elle est révélée
+    const index = availableCases.indexOf(currentCase);
+    if (index > -1) {
+        availableCases.splice(index, 1);
+    }
+    
     if (checkbox.checked && teamBoard[currentCase] === "fiole") {
         challengeText.innerText = "Boire la fiole";
     } else if (checkbox.checked && teamBoard[currentCase] !== "fiole") {
@@ -345,6 +351,7 @@ function revealChallenge(team) {
     document.querySelector(`#revealButton${team}`).classList.add('hidden');
     checkbox.disabled = true;
     
+    // Mise à jour du décompte seulement après la révélation
     updateRemainingDisplay();
 }
 
