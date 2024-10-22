@@ -4,6 +4,7 @@ let availableCases = [];
 let history = [];
 let isGenerating = false;
 let currentCase = null;
+let remainingPotions = 15; // Variable globale pour les fioles
 
 const team1Board = {};
 const team2Board = {};
@@ -135,48 +136,38 @@ function initializeBoards() {
 function countRemainingCases() {
     const counts = {
         team1: {
-            empty: 20,  // On commence avec 20 cases vides
-            potion: 15, // On commence avec 15 fioles
-            action: 25, // On commence avec 25 actions
-            total: 60   // Total initial
+            empty: 0,
+            potion: remainingPotions,
+            action: 0,
+            total: 0
         },
         team2: {
-            empty: 20,  // On commence avec 20 cases vides
-            potion: 15, // On commence avec 15 fioles
-            action: 25, // On commence avec 25 actions
-            total: 60   // Total initial
+            empty: 0,
+            potion: remainingPotions,
+            action: 0,
+            total: 0
         }
     };
 
-    // Pour chaque case révélée, on décrémente le compteur approprié
-    const allCases = letters.flatMap(letter => numbers.map(number => `${letter}${number}`));
-    const revealedCases = allCases.filter(caseId => !availableCases.includes(caseId));
-
-    revealedCases.forEach(caseId => {
+    // Compter les cases non révélées
+    availableCases.forEach(caseId => {
         // Pour l'équipe 1
-        const team1Text = document.querySelector(`#challenge1 p[data-case="${caseId}"]`)?.innerText;
-        if (team1Text === "Boire la fiole") {
-            counts.team1.potion--;
-        } else if (team1Text === "Case vide") {
-            counts.team1.empty--;
-        } else if (team1Text && team1Text !== "Cette case n'est pas une fiole !") {
-            counts.team1.action--;
+        if (team1Board[caseId] === "vide") {
+            counts.team1.empty++;
+        } else {
+            counts.team1.action++;
         }
-
+        
         // Pour l'équipe 2
-        const team2Text = document.querySelector(`#challenge2 p[data-case="${caseId}"]`)?.innerText;
-        if (team2Text === "Boire la fiole") {
-            counts.team2.potion--;
-        } else if (team2Text === "Case vide") {
-            counts.team2.empty--;
-        } else if (team2Text && team2Text !== "Cette case n'est pas une fiole !") {
-            counts.team2.action--;
+        if (team2Board[caseId] === "vide") {
+            counts.team2.empty++;
+        } else {
+            counts.team2.action++;
         }
     });
 
-    // Mise à jour des totaux
-    counts.team1.total = counts.team1.empty + counts.team1.potion + counts.team1.action;
-    counts.team2.total = counts.team2.empty + counts.team2.potion + counts.team2.action;
+    counts.team1.total = availableCases.length;
+    counts.team2.total = availableCases.length;
 
     return counts;
 }
@@ -252,6 +243,7 @@ function closeDuelOverlay() {
     document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
     document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
 }
+
 function startGeneration() {
     if (isGenerating) return;
     isGenerating = true;
@@ -259,6 +251,7 @@ function startGeneration() {
     document.getElementById('invocationSound').play();
     shuffleDisplay();
 }
+
 function shuffleDisplay() {
     if (availableCases.length === 0) {
         document.getElementById('result').innerText = "Toutes les cases ont été utilisées!";
@@ -267,7 +260,8 @@ function shuffleDisplay() {
 
     let shuffleCount = 0;
     const shuffleInterval = setInterval(() => {
-        const randomCase = availableCases[Math.floor(Math.random() * availableCases.length)];
+        const randomIndex = Math.floor(Math.random() * availableCases.length);
+        const randomCase = availableCases[randomIndex];
         document.getElementById('result').innerText = randomCase;
         shuffleCount++;
 
@@ -295,7 +289,6 @@ function generateCase() {
     showRevealButtons();
     resetPotionCheckboxes();
     updateHistory();
-    // Supprimé updateRemaining() ici
 
     isGenerating = false;
     document.querySelector('#grim-reaper').style.pointerEvents = 'auto';
@@ -324,14 +317,12 @@ function resetPotionCheckboxes() {
     });
 }
 
-let remainingPotions = 15; // Nombre de fioles disponibles par équipe
-
 function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
     
-    // On retire la case de availableCases quand elle est révélée
+    // On retire la case de availableCases seulement quand elle est révélée
     const index = availableCases.indexOf(currentCase);
     if (index > -1) {
         availableCases.splice(index, 1);
@@ -339,7 +330,7 @@ function revealChallenge(team) {
     
     // Si la case Fiole est cochée et qu'il reste des fioles disponibles
     if (checkbox.checked) {
-        if (team === 1 && remainingPotions > 0) {
+        if (remainingPotions > 0) {
             challengeText.innerText = "Boire la fiole";
             remainingPotions--;
         } else {
@@ -363,10 +354,6 @@ function revealChallenge(team) {
 function updateHistory() {
     const historyElement = document.getElementById('history');
     historyElement.innerHTML = "<h3>Dernières cases :</h3>" + history.join(" - ");
-}
-
-function updateRemaining() {
-    updateRemainingDisplay();
 }
 
 function moveGhost() {
@@ -393,7 +380,8 @@ function saveGameState() {
         availableCases,
         history,
         currentCase,
-        currentDuel
+        currentDuel,
+        remainingPotions
     };
     localStorage.setItem('tcsGameState', JSON.stringify(gameState));
 }
@@ -410,6 +398,7 @@ function loadGameState() {
         history = gameState.history;
         currentCase = gameState.currentCase;
         currentDuel = gameState.currentDuel;
+        remainingPotions = gameState.remainingPotions;
         return true;
     }
     return false;
@@ -435,7 +424,7 @@ function saveTeamNames() {
     }
 
     initializeBoards();
-    updateRemaining();
+    updateRemainingDisplay();
     generateDuel();
     saveGameState();
     
@@ -463,7 +452,7 @@ function updateUI() {
         document.getElementById('currentDuel').innerText = `Duel en cours : ${currentDuel[0]} VS ${currentDuel[1]}`;
     }
     updateHistory();
-    updateRemaining();
+    updateRemainingDisplay();
 }
 
 function closeOverlay() {
