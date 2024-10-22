@@ -106,8 +106,9 @@ function getUniqueAction(currentPlayer) {
 }
 
 function initializeBoards() {
-    // Réinitialisation du compteur de fioles
-    remainingPotions = 15;
+    // Réinitialiser les compteurs de fioles
+    remainingPotionsTeam1 = 15;
+    remainingPotionsTeam2 = 15;
 
     const allCases = letters.flatMap(letter => 
         numbers.map(number => `${letter}${number}`)
@@ -120,11 +121,11 @@ function initializeBoards() {
         const currentCase = allCases[i];
         
         if (i < 20) {
-            // 20 cases sont vides
+            // 20 cases vides
             team1Board[currentCase] = "vide";
             team2Board[currentCase] = "vide";
         } else {
-            // Les 40 autres cases sont des actions possibles
+            // Le reste en actions
             const team1Player = team1Participants[Math.floor(Math.random() * team1Participants.length)];
             const team2Player = team2Participants[Math.floor(Math.random() * team2Participants.length)];
             team1Board[currentCase] = getUniqueAction(team1Player);
@@ -137,13 +138,13 @@ function countRemainingCases() {
     const counts = {
         team1: {
             empty: 0,
-            potion: remainingPotions,
+            potion: remainingPotionsTeam1,
             action: 0,
             total: 0
         },
         team2: {
             empty: 0,
-            potion: remainingPotions,
+            potion: remainingPotionsTeam2,
             action: 0,
             total: 0
         }
@@ -317,31 +318,41 @@ function resetPotionCheckboxes() {
     });
 }
 
+let remainingPotionsTeam1 = 15;
+let remainingPotionsTeam2 = 15;
+
 function revealChallenge(team) {
     const checkbox = document.getElementById(`potionCheckbox${team}`);
     const challengeText = document.querySelector(`#challenge${team} p`);
     const teamBoard = team === 1 ? team1Board : team2Board;
+    const remainingPotions = team === 1 ? remainingPotionsTeam1 : remainingPotionsTeam2;
     
-    // On retire la case de availableCases seulement quand elle est révélée
+    // On retire la case des disponibles
     const index = availableCases.indexOf(currentCase);
     if (index > -1) {
         availableCases.splice(index, 1);
     }
     
-    // Si la case Fiole est cochée et qu'il reste des fioles disponibles
     if (checkbox.checked) {
+        // Vérifie si il reste des fioles à placer
         if (remainingPotions > 0) {
             challengeText.innerText = "Boire la fiole";
-            remainingPotions--;
+            // Décrémenter le compteur de fioles pour l'équipe correspondante
+            if (team === 1) {
+                remainingPotionsTeam1--;
+            } else {
+                remainingPotionsTeam2--;
+            }
         } else {
-            alert("Plus de fioles disponibles !");
+            alert("Plus de fioles disponibles pour cette équipe !");
             checkbox.checked = false;
-            const action = teamBoard[currentCase];
-            challengeText.innerText = action === "vide" ? "Case vide" : action;
+            const content = teamBoard[currentCase];
+            challengeText.innerText = content === "vide" ? "Case vide" : content;
         }
     } else {
-        const action = teamBoard[currentCase];
-        challengeText.innerText = action === "vide" ? "Case vide" : action;
+        // Révéler si c'est une case vide ou une action
+        const content = teamBoard[currentCase];
+        challengeText.innerText = content === "vide" ? "Case vide" : content;
     }
     
     challengeText.classList.remove('hidden');
