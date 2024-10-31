@@ -438,8 +438,8 @@ function saveTeamNames() {
     team1Participants = Array.from(document.querySelectorAll('#team1Participants input')).map(input => input.value).filter(name => name.trim() !== '');
     team2Participants = Array.from(document.querySelectorAll('#team2Participants input')).map(input => input.value).filter(name => name.trim() !== '');
 
-    if (team1Participants.length !== 6 || team2Participants.length !== 6) {
-        alert("Chaque équipe doit avoir exactement 6 participants !");
+    if (team1Participants.length !== 5 || team2Participants.length !== 5) { // Modifié de 6 à 5
+        alert("Chaque équipe doit avoir exactement 5 participants !");
         return;
     }
 
